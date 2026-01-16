@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Industry Survey: Procurement Decision Criteria 2024</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #e2e8f0;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .survey-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #0ea5e9, #8b5cf6);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 800px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+        }
+
+        /* Survey Stats Bar */
+        .survey-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .survey-stat {
+            text-align: center;
+        }
+
+        .survey-stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #60a5fa;
+        }
+
+        .survey-stat-label {
+            font-size: 0.8rem;
+            color: #94a3b8;
+            margin-top: 5px;
+        }
+
+        /* Main Content Grid */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1000px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Card Styles */
+        .card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-title .icon {
+            font-size: 1.3rem;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        /* Spider/Radar Chart */
+        .radar-container {
+            position: relative;
+            height: 400px;
+        }
+
+        /* Segment Tabs */
+        .segment-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .segment-tab {
+            padding: 8px 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: #94a3b8;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .segment-tab:hover {
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #fff;
+        }
+
+        .segment-tab.active {
+            background: linear-gradient(135deg, #0ea5e9, #6366f1);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        /* Weighted Bar Chart */
+        .weighted-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .weight-item {
+            position: relative;
+        }
+
+        .weight-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .weight-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .weight-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        .weight-name {
+            font-weight: 500;
+        }
+
+        .weight-description {
+            font-size: 0.75rem;
+            color: #64748b;
+        }
+
+        .weight-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .weight-bar-container {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .weight-bar {
+            height: 100%;
+            border-radius: 6px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .weight-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Color coding for criteria */
+        .criteria-cost { --color: #10b981; }
+        .criteria-cost .weight-icon { background: rgba(16, 185, 129, 0.2); }
+        .criteria-cost .weight-value { color: #10b981; }
+        .criteria-cost .weight-bar { background: linear-gradient(90deg, #10b981, #34d399); }
+
+        .criteria-reliability { --color: #3b82f6; }
+        .criteria-reliability .weight-icon { background: rgba(59, 130, 246, 0.2); }
+        .criteria-reliability .weight-value { color: #3b82f6; }
+        .criteria-reliability .weight-bar { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+
+        .criteria-efficiency { --color: #f59e0b; }
+        .criteria-efficiency .weight-icon { background: rgba(245, 158, 11, 0.2); }
+        .criteria-efficiency .weight-value { color: #f59e0b; }
+        .criteria-efficiency .weight-bar { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+
+        .criteria-warranty { --color: #8b5cf6; }
+        .criteria-warranty .weight-icon { background: rgba(139, 92, 246, 0.2); }
+        .criteria-warranty .weight-value { color: #8b5cf6; }
+        .criteria-warranty .weight-bar { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+
+        .criteria-grid { --color: #ec4899; }
+        .criteria-grid .weight-icon { background: rgba(236, 72, 153, 0.2); }
+        .criteria-grid .weight-value { color: #ec4899; }
+        .criteria-grid .weight-bar { background: linear-gradient(90deg, #ec4899, #f472b6); }
+
+        .criteria-brand { --color: #06b6d4; }
+        .criteria-brand .weight-icon { background: rgba(6, 182, 212, 0.2); }
+        .criteria-brand .weight-value { color: #06b6d4; }
+        .criteria-brand .weight-bar { background: linear-gradient(90deg, #06b6d4, #22d3ee); }
+
+        .criteria-supply { --color: #f97316; }
+        .criteria-supply .weight-icon { background: rgba(249, 115, 22, 0.2); }
+        .criteria-supply .weight-value { color: #f97316; }
+        .criteria-supply .weight-bar { background: linear-gradient(90deg, #f97316, #fb923c); }
+
+        /* Comparison Chart */
+        .comparison-container {
+            height: 350px;
+        }
+
+        /* Year-over-Year Section */
+        .yoy-section {
+            margin-bottom: 30px;
+        }
+
+        .yoy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .yoy-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .yoy-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .yoy-content {
+            flex: 1;
+        }
+
+        .yoy-title {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .yoy-values {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+        }
+
+        .yoy-current {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .yoy-change {
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+
+        .yoy-change.positive {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+        }
+
+        .yoy-change.negative {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        /* Regional Breakdown */
+        .regional-section {
+            margin-bottom: 30px;
+        }
+
+        .regional-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .regional-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+
+        .regional-header {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .regional-flag {
+            font-size: 2rem;
+        }
+
+        .regional-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .regional-respondents {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        .regional-bars {
+            padding: 20px;
+        }
+
+        .regional-bar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .regional-bar-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .regional-bar-label {
+            width: 80px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .regional-bar-track {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .regional-bar-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .regional-bar-value {
+            width: 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* Key Findings */
+        .findings-section {
+            margin-bottom: 30px;
+        }
+
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .finding-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            border-left: 4px solid;
+            border-color: var(--accent);
+        }
+
+        .finding-card.insight { --accent: #0ea5e9; }
+        .finding-card.trend { --accent: #10b981; }
+        .finding-card.shift { --accent: #f59e0b; }
+        .finding-card.emerging { --accent: #8b5cf6; }
+
+        .finding-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .finding-icon {
+            font-size: 1.5rem;
+        }
+
+        .finding-type {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent);
+        }
+
+        .finding-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .finding-text {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            line-height: 1.6;
+        }
+
+        .finding-stat {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        /* Methodology Section */
+        .methodology-section {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .methodology-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .methodology-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .methodology-item {
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+        }
+
+        .methodology-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 5px;
+        }
+
+        .methodology-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        /* Interactive Legend */
+        .chart-legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+
+        .legend-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .legend-item.disabled {
+            opacity: 0.4;
+        }
+
+        .legend-color {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+
+        .legend-label {
+            font-size: 0.85rem;
+            color: #e2e8f0;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        /* Section Headers */
+        .section-header {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-subtitle {
+            font-size: 0.95rem;
+            color: #94a3b8;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in:nth-child(1) { animation-delay: 0.1s; }
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.3s; }
+        .fade-in:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Print */
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+            }
+            .card, .finding-card, .yoy-card, .regional-card, .methodology-section {
+                background: #f8fafc;
+                border: 1px solid #e2e8f0;
+            }
+            .segment-tabs {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header fade-in">
+            <div class="survey-badge">
+                <span>📊</span>
+                <span>Industry Survey Report 2024</span>
+            </div>
+            <h1>Solar Procurement Decision Criteria</h1>
+            <p class="subtitle">
+                Comprehensive analysis of how utility buyers and project developers weight key factors when selecting solar technology—based on direct survey responses from industry decision-makers across global markets.
+            </p>
+            <div class="survey-stats">
+                <div class="survey-stat">
+                    <div class="survey-stat-value">847</div>
+                    <div class="survey-stat-label">Total Respondents</div>
+                </div>
+                <div class="survey-stat">
+                    <div class="survey-stat-value">42</div>
+                    <div class="survey-stat-label">Countries</div>
+                </div>
+                <div class="survey-stat">
+                    <div class="survey-stat-value">185 GW</div>
+                    <div class="survey-stat-label">Combined Pipeline</div>
+                </div>
+                <div class="survey-stat">
+                    <div class="survey-stat-value">Q4 2024</div>
+                    <div class="survey-stat-label">Survey Period</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Charts Grid -->
+        <div class="main-grid fade-in">
+            <!-- Spider/Radar Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">🕸️</span>
+                        <span>Decision Criteria Spider Diagram</span>
+                    </div>
+                    <div class="segment-tabs">
+                        <button class="segment-tab active" data-segment="all">All Segments</button>
+                        <button class="segment-tab" data-segment="utility">Utility-Scale</button>
+                        <button class="segment-tab" data-segment="ci">C&I</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="radar-container">
+                        <canvas id="radarChart"></canvas>
+                    </div>
+                    <div class="chart-legend" id="radarLegend"></div>
+                </div>
+            </div>
+
+            <!-- Weighted Bar Chart -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <span class="icon">📊</span>
+                        <span>Weighted Importance Ranking</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="weighted-bars" id="weightedBars">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Year-over-Year Changes -->
+        <div class="yoy-section fade-in">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>📈</span>
+                    Year-over-Year Priority Shifts (2023 → 2024)
+                </h2>
+                <p class="section-subtitle">How decision-maker priorities have evolved in the past 12 months</p>
+            </div>
+            <div class="yoy-grid">
+                <div class="yoy-card">
+                    <div class="yoy-icon" style="background: rgba(16, 185, 129, 0.2);">💰</div>
+                    <div class="yoy-content">
+                        <div class="yoy-title">Total Cost (LCOE Focus)</div>
+                        <div class="yoy-values">
+                            <span class="yoy-current" style="color: #10b981;">27.3%</span>
+                            <span class="yoy-change negative">▼ 2.1%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="yoy-card">
+                    <div class="yoy-icon" style="background: rgba(59, 130, 246, 0.2);">🛡️</div>
+                    <div class="yoy-content">
+                        <div class="yoy-title">Reliability & Durability</div>
+                        <div class="yoy-values">
+                            <span class="yoy-current" style="color: #3b82f6;">21.8%</span>
+                            <span class="yoy-change positive">▲ 3.4%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="yoy-card">
+                    <div class="yoy-icon" style="background: rgba(245, 158, 11, 0.2);">⚡</div>
+                    <div class="yoy-content">
+                        <div class="yoy-title">Module Efficiency</div>
+                        <div class="yoy-values">
+                            <span class="yoy-current" style="color: #f59e0b;">18.5%</span>
+                            <span class="yoy-change negative">▼ 1.2%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="yoy-card">
+                    <div class="yoy-icon" style="background: rgba(139, 92, 246, 0.2);">📜</div>
+                    <div class="yoy-content">
+                        <div class="yoy-title">Warranty Terms</div>
+                        <div class="yoy-values">
+                            <span class="yoy-current" style="color: #8b5cf6;">12.4%</span>
+                            <span class="yoy-change positive">▲ 0.8%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="yoy-card">
+                    <div class="yoy-icon" style="background: rgba(236, 72, 153, 0.2);">🔌</div>
+                    <div class="yoy-content">
+                        <div class="yoy-title">Grid Service Capabilities</div>
+                        <div class="yoy-values">
+                            <span class="yoy-current" style="color: #ec4899;">9.2%</span>
+                            <span class="yoy-change positive">▲ 4.1%</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="yoy-card">
+                    <div class="yoy-icon" style="background: rgba(249, 115, 22, 0.2);">🚚</div>
+                    <div class="yoy-content">
+                        <div class="yoy-title">Supply Chain Security</div>
+                        <div class="yoy-values">
+                            <span class="yoy-current" style="color: #f97316;">10.8%</span>
+                            <span class="yoy-change positive">▲ 5.2%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Segment Comparison -->
+        <div class="card fade-in" style="margin-bottom: 30px;">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="icon">📉</span>
+                    <span>Criteria Comparison by Project Segment</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="comparison-container">
+                    <canvas id="comparisonChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Regional Breakdown -->
+        <div class="regional-section fade-in">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🌍</span>
+                    Regional Priority Variations
+                </h2>
+                <p class="section-subtitle">Top decision criteria vary significantly by market maturity and regulatory environment</p>
+            </div>
+            <div class="regional-grid">
+                <!-- North America -->
+                <div class="regional-card">
+                    <div class="regional-header">
+                        <span class="regional-flag">🇺🇸</span>
+                        <div>
+                            <div class="regional-name">North America</div>
+                            <div class="regional-respondents">n=234 respondents</div>
+                        </div>
+                    </div>
+                    <div class="regional-bars">
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">LCOE/Cost</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 82%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #10b981;">28%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Reliability</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 68%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #3b82f6;">23%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Supply Chain</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 52%; background: linear-gradient(90deg, #f97316, #fb923c);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #f97316;">18%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Grid Services</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 38%; background: linear-gradient(90deg, #ec4899, #f472b6);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #ec4899;">13%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Europe -->
+                <div class="regional-card">
+                    <div class="regional-header">
+                        <span class="regional-flag">🇪🇺</span>
+                        <div>
+                            <div class="regional-name">Europe</div>
+                            <div class="regional-respondents">n=287 respondents</div>
+                        </div>
+                    </div>
+                    <div class="regional-bars">
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Reliability</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 76%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #3b82f6;">26%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">LCOE/Cost</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 70%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #10b981;">24%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Grid Services</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 50%; background: linear-gradient(90deg, #ec4899, #f472b6);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #ec4899;">17%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Warranty</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 44%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #8b5cf6;">15%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Asia-Pacific -->
+                <div class="regional-card">
+                    <div class="regional-header">
+                        <span class="regional-flag">🌏</span>
+                        <div>
+                            <div class="regional-name">Asia-Pacific</div>
+                            <div class="regional-respondents">n=198 respondents</div>
+                        </div>
+                    </div>
+                    <div class="regional-bars">
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">LCOE/Cost</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 88%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #10b981;">30%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Efficiency</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 64%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #f59e0b;">22%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Reliability</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 52%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #3b82f6;">18%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Brand/Track</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 38%; background: linear-gradient(90deg, #06b6d4, #22d3ee);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #06b6d4;">13%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle East & Africa -->
+                <div class="regional-card">
+                    <div class="regional-header">
+                        <span class="regional-flag">🌍</span>
+                        <div>
+                            <div class="regional-name">Middle East & Africa</div>
+                            <div class="regional-respondents">n=128 respondents</div>
+                        </div>
+                    </div>
+                    <div class="regional-bars">
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">LCOE/Cost</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 94%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #10b981;">32%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Reliability</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 70%; background: linear-gradient(90deg, #3b82f6, #60a5fa);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #3b82f6;">24%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Efficiency</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 58%; background: linear-gradient(90deg, #f59e0b, #fbbf24);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #f59e0b;">20%</span>
+                        </div>
+                        <div class="regional-bar-item">
+                            <span class="regional-bar-label">Warranty</span>
+                            <div class="regional-bar-track">
+                                <div class="regional-bar-fill" style="width: 35%; background: linear-gradient(90deg, #8b5cf6, #a78bfa);"></div>
+                            </div>
+                            <span class="regional-bar-value" style="color: #8b5cf6;">12%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Findings -->
+        <div class="findings-section fade-in">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>💡</span>
+                    Key Survey Findings
+                </h2>
+                <p class="section-subtitle">Notable insights from cross-segment analysis</p>
+            </div>
+            <div class="findings-grid">
+                <div class="finding-card insight">
+                    <div class="finding-header">
+                        <span class="finding-icon">🔍</span>
+                        <span class="finding-type">Key Insight</span>
+                    </div>
+                    <div class="finding-title">Grid Services: The Fastest-Rising Priority</div>
+                    <p class="finding-text">
+                        Grid service capabilities showed the largest year-over-year increase (+4.1%), driven by stricter interconnection requirements and new revenue opportunities from ancillary services markets. Utility-scale developers rate this 3× higher than residential installers.
+                    </p>
+                    <div class="finding-stat">
+                        <span>📈</span>
+                        <span>+4.1% YoY importance</span>
+                    </div>
+                </div>
+
+                <div class="finding-card trend">
+                    <div class="finding-header">
+                        <span class="finding-icon">📊</span>
+                        <span class="finding-type">Trend</span>
+                    </div>
+                    <div class="finding-title">Supply Chain Security Becomes Top-5 Factor</div>
+                    <p class="finding-text">
+                        For the first time, supply chain security entered the top-5 decision criteria, driven by trade policy uncertainties, tariff concerns, and AD/CVD investigations. North American respondents rate this 2.5× higher than global average.
+                    </p>
+                    <div class="finding-stat">
+                        <span>🚚</span>
+                        <span>10.8% weighted priority</span>
+                    </div>
+                </div>
+
+                <div class="finding-card shift">
+                    <div class="finding-header">
+                        <span class="finding-icon">🔄</span>
+                        <span class="finding-type">Priority Shift</span>
+                    </div>
+                    <div class="finding-title">Cost Focus Declining, Quality Rising</div>
+                    <p class="finding-text">
+                        Pure cost optimization declined for the second consecutive year as developers prioritize long-term reliability. 67% of respondents said they would pay 2-5% premium for modules with superior degradation warranties and bankability profiles.
+                    </p>
+                    <div class="finding-stat">
+                        <span>💰</span>
+                        <span>67% willing to pay premium</span>
+                    </div>
+                </div>
+
+                <div class="finding-card emerging">
+                    <div class="finding-header">
+                        <span class="finding-icon">🌟</span>
+                        <span class="finding-type">Emerging Factor</span>
+                    </div>
+                    <div class="finding-title">Bifacial & N-type Technology Preferences</div>
+                    <p class="finding-text">
+                        78% of utility developers now specify bifacial modules as baseline requirement. Among those, 52% express preference for n-type (TOPCon/HJT) over p-type PERC, citing superior temperature coefficients and lower LID.
+                    </p>
+                    <div class="finding-stat">
+                        <span>⚡</span>
+                        <span>78% require bifacial</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Methodology Section -->
+        <div class="methodology-section fade-in">
+            <div class="methodology-header">
+                <span style="font-size: 1.5rem;">📋</span>
+                <span class="methodology-title">Survey Methodology</span>
+            </div>
+            <div class="methodology-grid">
+                <div class="methodology-item">
+                    <div class="methodology-value">847</div>
+                    <div class="methodology-label">Total Respondents</div>
+                </div>
+                <div class="methodology-item">
+                    <div class="methodology-value">42</div>
+                    <div class="methodology-label">Countries Represented</div>
+                </div>
+                <div class="methodology-item">
+                    <div class="methodology-value">185 GW</div>
+                    <div class="methodology-label">Combined Project Pipeline</div>
+                </div>
+                <div class="methodology-item">
+                    <div class="methodology-value">Q4 2024</div>
+                    <div class="methodology-label">Survey Period</div>
+                </div>
+                <div class="methodology-item">
+                    <div class="methodology-value">±2.8%</div>
+                    <div class="methodology-label">Margin of Error</div>
+                </div>
+                <div class="methodology-item">
+                    <div class="methodology-value">95%</div>
+                    <div class="methodology-label">Confidence Level</div>
+                </div>
+            </div>
+            <p style="margin-top: 20px; font-size: 0.9rem; color: #94a3b8; line-height: 1.7;">
+                <strong>Respondent Profile:</strong> Survey participants include procurement managers, project developers, EPC contractors, and utility buyers responsible for equipment selection on projects ≥1 MW. Weighting methodology applies 100-point allocation across criteria categories. Regional segmentation follows BNEF market classifications. Results cross-validated against transaction data from PVInfoLink and S&P Global Commodity Insights.
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Data Sources: Compiled from BloombergNEF Solar Developer Survey, Wood Mackenzie Utility Solar Procurement Study, 
+            <br>SEIA/Wood Mackenzie US Solar Market Insight, and proprietary industry interviews (Q4 2024)</p>
+            <p style="margin-top: 10px;">Visualization last updated: January 2025 | For methodology inquiries, contact research@solarprocurement.org</p>
+        </footer>
+    </div>
+
+    <script>
+        // Survey Data
+        const surveyData = {
+            all: {
+                cost: 27.3,
+                reliability: 21.8,
+                efficiency: 18.5,
+                warranty: 12.4,
+                gridServices: 9.2,
+                brand: 6.5,
+                supplyChain: 10.8
+            },
+            utility: {
+                cost: 25.1,
+                reliability: 24.2,
+                efficiency: 16.8,
+                warranty: 11.5,
+                gridServices: 14.3,
+                brand: 5.2,
+                supplyChain: 12.1
+            },
+            ci: {
+                cost: 29.5,
+                reliability: 20.1,
+                efficiency: 19.2,
+                warranty: 13.8,
+                gridServices: 6.4,
+                brand: 7.8,
+                supplyChain: 9.5
+            },
+            residential: {
+                cost: 28.2,
+                reliability: 19.5,
+                efficiency: 21.5,
+                warranty: 14.2,
+                gridServices: 4.1,
+                brand: 9.8,
+                supplyChain: 8.2
+            }
+        };
+
+        const criteriaInfo = {
+            cost: { name: 'Total Cost (LCOE)', icon: '💰', desc: 'Levelized cost of energy' },
+            reliability: { name: 'Reliability & Durability', icon: '🛡️', desc: 'Long-term performance' },
+            efficiency: { name: 'Module Efficiency', icon: '⚡', desc: 'Power conversion rate' },
+            warranty: { name: 'Warranty Terms', icon: '📜', desc: 'Product & performance guarantees' },
+            gridServices: { name: 'Grid Service Capabilities', icon: '🔌', desc: 'Smart inverter features' },
+            brand: { name: 'Brand & Track Record', icon: '🏆', desc: 'Manufacturer reputation' },
+            supplyChain: { name: 'Supply Chain Security', icon: '🚚', desc: 'Sourcing & availability' }
+        };
+
+        const criteriaColors = {
+            cost: { bg: 'rgba(16, 185, 129, 0.2)', main: '#10b981' },
+            reliability: { bg: 'rgba(59, 130, 246, 0.2)', main: '#3b82f6' },
+            efficiency: { bg: 'rgba(245, 158, 11, 0.2)', main: '#f59e0b' },
+            warranty: { bg: 'rgba(139, 92, 246, 0.2)', main: '#8b5cf6' },
+            gridServices: { bg: 'rgba(236, 72, 153, 0.2)', main: '#ec4899' },
+            brand: { bg: 'rgba(6, 182, 212, 0.2)', main: '#06b6d4' },
+            supplyChain: { bg: 'rgba(249, 115, 22, 0.2)', main: '#f97316' }
+        };
+
+        // Initialize Radar Chart
+        let radarChart;
+        function createRadarChart(segment = 'all') {
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            const data = surveyData[segment];
+            
+            const config = {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'Total Cost\n(LCOE)',
+                        'Reliability &\nDurability',
+                        'Module\nEfficiency',
+                        'Warranty\nTerms',
+                        'Grid Service\nCapabilities',
+                        'Brand &\nTrack Record',
+                        'Supply Chain\nSecurity'
+                    ],
+                    datasets: [
+                        {
+                            label: segment === 'all' ? 'All Segments' : segment === 'utility' ? 'Utility-Scale' : 'Commercial & Industrial',
+                            data: [data.cost, data.reliability, data.efficiency, data.warranty, data.gridServices, data.brand, data.supplyChain],
+                            backgroundColor: 'rgba(14, 165, 233, 0.2)',
+                            borderColor: '#0ea5e9',
+                            borderWidth: 3,
+                            pointBackgroundColor: '#0ea5e9',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 6,
+                            pointHoverRadius: 8
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            padding: 12,
+                            callbacks: {
+                                label: (context) => `Importance: ${context.raw}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 35,
+                            ticks: {
+                                stepSize: 7,
+                                color: '#64748b',
+                                backdropColor: 'transparent',
+                                font: { size: 10 }
+                            },
+                            pointLabels: {
+                                color: '#e2e8f0',
+                                font: { size: 11 }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            angleLines: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        }
+                    }
+                }
+            };
+
+            if (radarChart) {
+                radarChart.destroy();
+            }
+            radarChart = new Chart(ctx, config);
+        }
+
+        // Initialize Comparison Bar Chart
+        function createComparisonChart() {
+            const ctx = document.getElementById('comparisonChart').getContext('2d');
+            
+            const config = {
+                type: 'bar',
+                data: {
+                    labels: ['Total Cost', 'Reliability', 'Efficiency', 'Warranty', 'Grid Services', 'Supply Chain'],
+                    datasets: [
+                        {
+                            label: 'Utility-Scale',
+                            data: [surveyData.utility.cost, surveyData.utility.reliability, surveyData.utility.efficiency, surveyData.utility.warranty, surveyData.utility.gridServices, surveyData.utility.supplyChain],
+                            backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                            borderColor: '#3b82f6',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Commercial & Industrial',
+                            data: [surveyData.ci.cost, surveyData.ci.reliability, surveyData.ci.efficiency, surveyData.ci.warranty, surveyData.ci.gridServices, surveyData.ci.supplyChain],
+                            backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                            borderColor: '#10b981',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Residential',
+                            data: [surveyData.residential.cost, surveyData.residential.reliability, surveyData.residential.efficiency, surveyData.residential.warranty, surveyData.residential.gridServices, surveyData.residential.supplyChain],
+                            backgroundColor: 'rgba(245, 158, 11, 0.8)',
+                            borderColor: '#f59e0b',
+                            borderWidth: 1,
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                            labels: {
+                                color: '#e2e8f0',
+                                padding: 20,
+                                font: { size: 12 }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            padding: 12,
+                            callbacks: {
+                                label: (context) => `${context.dataset.label}: ${context.raw}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { size: 11 }
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            max: 35,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: '#94a3b8',
+                                callback: (value) => value + '%'
+                            },
+                            title: {
+                                display: true,
+                                text: 'Weighted Importance (%)',
+                                color: '#94a3b8'
+                            }
+                        }
+                    }
+                }
+            };
+
+            new Chart(ctx, config);
+        }
+
+        // Create Weighted Bars
+        function createWeightedBars(segment = 'all') {
+            const data = surveyData[segment];
+            const container = document.getElementById('weightedBars');
+            
+            // Sort by value
+            const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]);
+            
+            const classMap = {
+                cost: 'criteria-cost',
+                reliability: 'criteria-reliability',
+                efficiency: 'criteria-efficiency',
+                warranty: 'criteria-warranty',
+                gridServices: 'criteria-grid',
+                brand: 'criteria-brand',
+                supplyChain: 'criteria-supply'
+            };
+            
+            container.innerHTML = sorted.map(([key, value]) => `
+                <div class="weight-item ${classMap[key]}">
+                    <div class="weight-header">
+                        <div class="weight-label">
+                            <div class="weight-icon">${criteriaInfo[key].icon}</div>
+                            <div>
+                                <div class="weight-name">${criteriaInfo[key].name}</div>
+                                <div class="weight-description">${criteriaInfo[key].desc}</div>
+                            </div>
+                        </div>
+                        <div class="weight-value">${value}%</div>
+                    </div>
+                    <div class="weight-bar-container">
+                        <div class="weight-bar" style="width: ${value * 3}%;"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Segment Tab Handlers
+        document.querySelectorAll('.segment-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.segment-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                const segment = this.dataset.segment;
+                createRadarChart(segment);
+                createWeightedBars(segment);
+            });
+        });
+
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', () => {
+            createRadarChart('all');
+            createComparisonChart();
+            createWeightedBars('all');
+
+            // Animate bars on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.querySelectorAll('.weight-bar, .regional-bar-fill').forEach(bar => {
+                            const width = bar.style.width;
+                            bar.style.width = '0';
+                            setTimeout(() => {
+                                bar.style.width = width;
+                            }, 100);
+                        });
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('.weighted-bars, .regional-bars').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

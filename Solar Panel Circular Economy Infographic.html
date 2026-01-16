@@ -1,0 +1,1360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Panel Circular Economy Infographic</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #0a1628 0%, #1a2a4a 50%, #0d2137 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '♻️';
+            font-size: 60px;
+            display: block;
+            margin-bottom: 15px;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(90deg, #00d4aa, #00a8cc, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: #8892a6;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Main Circular Diagram */
+        .circular-section {
+            position: relative;
+            margin: 50px auto;
+        }
+
+        .circle-container {
+            position: relative;
+            width: 700px;
+            height: 700px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 768px) {
+            .circle-container {
+                width: 350px;
+                height: 350px;
+            }
+        }
+
+        .outer-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            background: linear-gradient(45deg, #00d4aa, #00a8cc, #7c3aed, #00d4aa) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .inner-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #1e3a5f 0%, #0d1f33 100%);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #00d4aa;
+            box-shadow: 0 0 40px rgba(0, 212, 170, 0.3);
+            z-index: 10;
+        }
+
+        .inner-circle h3 {
+            color: #00d4aa;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .inner-circle .years {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4aa, #00a8cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .inner-circle .label {
+            font-size: 0.9rem;
+            color: #8892a6;
+        }
+
+        /* Lifecycle Stages */
+        .stage {
+            position: absolute;
+            width: 150px;
+            padding: 20px 15px;
+            background: rgba(30, 58, 95, 0.9);
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
+        }
+
+        .stage:hover {
+            transform: scale(1.05);
+            border-color: var(--stage-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .stage.active {
+            border-color: var(--stage-color);
+            box-shadow: 0 0 20px var(--stage-color);
+        }
+
+        .stage-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .stage-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+
+        .stage-duration {
+            font-size: 0.8rem;
+            color: #8892a6;
+        }
+
+        /* Stage Positions */
+        .stage-1 { --stage-color: #f59e0b; top: 0; left: 50%; transform: translateX(-50%); }
+        .stage-2 { --stage-color: #10b981; top: 15%; right: 5%; }
+        .stage-3 { --stage-color: #3b82f6; top: 50%; right: -5%; transform: translateY(-50%); }
+        .stage-4 { --stage-color: #8b5cf6; bottom: 15%; right: 5%; }
+        .stage-5 { --stage-color: #ec4899; bottom: 0; left: 50%; transform: translateX(-50%); }
+        .stage-6 { --stage-color: #06b6d4; bottom: 15%; left: 5%; }
+        .stage-7 { --stage-color: #00d4aa; top: 50%; left: -5%; transform: translateY(-50%); }
+        .stage-8 { --stage-color: #84cc16; top: 15%; left: 5%; }
+
+        @media (max-width: 768px) {
+            .stage {
+                width: 100px;
+                padding: 10px;
+            }
+            .stage-icon { font-size: 1.5rem; }
+            .stage-title { font-size: 0.7rem; }
+            .stage-duration { font-size: 0.6rem; }
+        }
+
+        /* Arrow Connectors */
+        .arrow-svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        /* Materials Section */
+        .materials-section {
+            margin: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #00d4aa, #00a8cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .material-card {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.8) 0%, rgba(13, 31, 51, 0.9) 100%);
+            border-radius: 20px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .material-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .material-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--mat-color);
+        }
+
+        .material-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            background: var(--mat-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .material-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .material-percent {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--mat-color);
+            margin-bottom: 5px;
+        }
+
+        .material-label {
+            font-size: 0.85rem;
+            color: #8892a6;
+            margin-bottom: 15px;
+        }
+
+        .recovery-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .recovery-fill {
+            height: 100%;
+            background: var(--mat-color);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .recovery-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #8892a6;
+        }
+
+        .recovery-value {
+            color: var(--mat-color);
+            font-weight: 600;
+        }
+
+        /* Material Colors */
+        .mat-glass { --mat-color: #06b6d4; }
+        .mat-aluminum { --mat-color: #94a3b8; }
+        .mat-silicon { --mat-color: #6366f1; }
+        .mat-copper { --mat-color: #f97316; }
+        .mat-silver { --mat-color: #e2e8f0; }
+
+        /* Statistics Section */
+        .stats-section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.5) 0%, rgba(13, 31, 51, 0.8) 100%);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4aa, #00a8cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: #8892a6;
+            margin-top: 5px;
+        }
+
+        .stat-note {
+            font-size: 0.75rem;
+            color: #5a6478;
+            margin-top: 8px;
+        }
+
+        /* Comparison Chart */
+        .comparison-section {
+            margin: 60px 0;
+        }
+
+        .comparison-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-card {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.7) 0%, rgba(13, 31, 51, 0.9) 100%);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-title {
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bar-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+        }
+
+        .bar-track {
+            height: 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-fill {
+            height: 100%;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: width 1.5s ease;
+        }
+
+        .bar-current { background: linear-gradient(90deg, #f59e0b, #f97316); }
+        .bar-target { background: linear-gradient(90deg, #10b981, #00d4aa); }
+        .bar-projected { background: linear-gradient(90deg, #3b82f6, #6366f1); }
+
+        /* Timeline */
+        .timeline-section {
+            margin: 60px 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 30px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #00d4aa, #00a8cc, #7c3aed);
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 40px;
+            position: relative;
+            margin-bottom: 50px;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(even) {
+            align-self: flex-end;
+            justify-content: flex-start;
+            padding-left: 40px;
+            padding-right: 0;
+            margin-left: 50%;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                width: 100%;
+                margin-left: 0;
+                padding-left: 60px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #00d4aa;
+            border-radius: 50%;
+            right: -10px;
+            top: 20px;
+            border: 4px solid #0a1628;
+            z-index: 2;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -10px;
+            right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 10px;
+                right: auto;
+            }
+        }
+
+        .timeline-content {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.8) 0%, rgba(13, 31, 51, 0.9) 100%);
+            padding: 25px;
+            border-radius: 15px;
+            max-width: 350px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4aa;
+            margin-bottom: 10px;
+        }
+
+        .timeline-text {
+            font-size: 0.95rem;
+            color: #c4cad4;
+            line-height: 1.6;
+        }
+
+        .timeline-stat {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #f59e0b;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, rgba(0, 212, 170, 0.1) 0%, rgba(0, 168, 204, 0.1) 100%);
+            border-radius: 25px;
+            margin: 60px 0;
+            border: 1px solid rgba(0, 212, 170, 0.3);
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .cta-text {
+            font-size: 1.1rem;
+            color: #8892a6;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-stats {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+
+        .cta-stat {
+            text-align: center;
+        }
+
+        .cta-stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #00d4aa, #00a8cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-stat-label {
+            font-size: 0.9rem;
+            color: #8892a6;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #5a6478;
+            font-size: 0.85rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 40px;
+        }
+
+        .footer-sources {
+            margin-top: 15px;
+            font-size: 0.75rem;
+        }
+
+        /* Animation Classes */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Detail Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e3a5f 0%, #0d1f33 100%);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .modal-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00d4aa;
+        }
+
+        .modal-text {
+            color: #c4cad4;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .modal-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .modal-stat {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .modal-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #00d4aa;
+        }
+
+        .modal-stat-label {
+            font-size: 0.8rem;
+            color: #8892a6;
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(0, 212, 170, 0.3);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header animate-in">
+            <h1>Solar Panel Circular Economy</h1>
+            <p class="subtitle">From Manufacturing to Recycling: A Complete Lifecycle Analysis of Photovoltaic Materials and Sustainability Pathways</p>
+        </header>
+
+        <!-- Circular Diagram -->
+        <section class="circular-section animate-in">
+            <div class="circle-container">
+                <div class="outer-ring"></div>
+                
+                <div class="inner-circle">
+                    <h3>Panel Lifespan</h3>
+                    <div class="years">25-30</div>
+                    <div class="label">Years</div>
+                </div>
+
+                <!-- Lifecycle Stages -->
+                <div class="stage stage-1" data-stage="1">
+                    <div class="stage-icon">⛏️</div>
+                    <div class="stage-title">Raw Material Extraction</div>
+                    <div class="stage-duration">Mining & Processing</div>
+                </div>
+
+                <div class="stage stage-2" data-stage="2">
+                    <div class="stage-icon">🏭</div>
+                    <div class="stage-title">Manufacturing</div>
+                    <div class="stage-duration">Cell & Module Production</div>
+                </div>
+
+                <div class="stage stage-3" data-stage="3">
+                    <div class="stage-icon">🚚</div>
+                    <div class="stage-title">Distribution</div>
+                    <div class="stage-duration">Global Shipping</div>
+                </div>
+
+                <div class="stage stage-4" data-stage="4">
+                    <div class="stage-icon">🔧</div>
+                    <div class="stage-title">Installation</div>
+                    <div class="stage-duration">System Setup</div>
+                </div>
+
+                <div class="stage stage-5" data-stage="5">
+                    <div class="stage-icon">☀️</div>
+                    <div class="stage-title">Operation</div>
+                    <div class="stage-duration">25-30 Years Power Generation</div>
+                </div>
+
+                <div class="stage stage-6" data-stage="6">
+                    <div class="stage-icon">📋</div>
+                    <div class="stage-title">Collection</div>
+                    <div class="stage-duration">End-of-Life Gathering</div>
+                </div>
+
+                <div class="stage stage-7" data-stage="7">
+                    <div class="stage-icon">♻️</div>
+                    <div class="stage-title">Recycling</div>
+                    <div class="stage-duration">Material Recovery</div>
+                </div>
+
+                <div class="stage stage-8" data-stage="8">
+                    <div class="stage-icon">🔄</div>
+                    <div class="stage-title">Reintegration</div>
+                    <div class="stage-duration">Back to Manufacturing</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Statistics -->
+        <section class="stats-section animate-in">
+            <h2 class="section-title">📊 The Growing Challenge</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🌍</div>
+                    <div class="stat-value" id="stat-installed">1.6 TW</div>
+                    <div class="stat-label">Global Installed Capacity (2024)</div>
+                    <div class="stat-note">Growing 25% annually</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⚠️</div>
+                    <div class="stat-value" id="stat-waste">78M</div>
+                    <div class="stat-label">Tonnes E-Waste by 2050</div>
+                    <div class="stat-note">Cumulative panel waste</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value">$15B</div>
+                    <div class="stat-label">Recoverable Material Value</div>
+                    <div class="stat-note">By 2050 estimate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">📉</div>
+                    <div class="stat-value" id="stat-recycled">10%</div>
+                    <div class="stat-label">Current Recycling Rate</div>
+                    <div class="stat-note">Global average (2024)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recoverable Materials -->
+        <section class="materials-section animate-in">
+            <h2 class="section-title">🔋 Recoverable Materials by Panel Weight</h2>
+            <div class="materials-grid">
+                <div class="material-card mat-glass">
+                    <div class="material-icon">🪟</div>
+                    <div class="material-name">Glass</div>
+                    <div class="material-percent">75%</div>
+                    <div class="material-label">of panel weight</div>
+                    <div class="recovery-bar">
+                        <div class="recovery-fill" style="width: 95%;"></div>
+                    </div>
+                    <div class="recovery-label">
+                        <span>Recovery Rate</span>
+                        <span class="recovery-value">95%</span>
+                    </div>
+                </div>
+
+                <div class="material-card mat-aluminum">
+                    <div class="material-icon">🔩</div>
+                    <div class="material-name">Aluminum</div>
+                    <div class="material-percent">10%</div>
+                    <div class="material-label">of panel weight</div>
+                    <div class="recovery-bar">
+                        <div class="recovery-fill" style="width: 100%;"></div>
+                    </div>
+                    <div class="recovery-label">
+                        <span>Recovery Rate</span>
+                        <span class="recovery-value">100%</span>
+                    </div>
+                </div>
+
+                <div class="material-card mat-silicon">
+                    <div class="material-icon">💎</div>
+                    <div class="material-name">Silicon</div>
+                    <div class="material-percent">3-4%</div>
+                    <div class="material-label">of panel weight</div>
+                    <div class="recovery-bar">
+                        <div class="recovery-fill" style="width: 85%;"></div>
+                    </div>
+                    <div class="recovery-label">
+                        <span>Recovery Rate</span>
+                        <span class="recovery-value">85%</span>
+                    </div>
+                </div>
+
+                <div class="material-card mat-copper">
+                    <div class="material-icon">🔶</div>
+                    <div class="material-name">Copper</div>
+                    <div class="material-percent">1%</div>
+                    <div class="material-label">of panel weight</div>
+                    <div class="recovery-bar">
+                        <div class="recovery-fill" style="width: 95%;"></div>
+                    </div>
+                    <div class="recovery-label">
+                        <span>Recovery Rate</span>
+                        <span class="recovery-value">95%</span>
+                    </div>
+                </div>
+
+                <div class="material-card mat-silver">
+                    <div class="material-icon">✨</div>
+                    <div class="material-name">Silver</div>
+                    <div class="material-percent">0.05%</div>
+                    <div class="material-label">of panel weight</div>
+                    <div class="recovery-bar">
+                        <div class="recovery-fill" style="width: 94%;"></div>
+                    </div>
+                    <div class="recovery-label">
+                        <span>Recovery Rate</span>
+                        <span class="recovery-value">94%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recycling Rate Comparison -->
+        <section class="comparison-section animate-in">
+            <h2 class="section-title">📈 Recycling Rates: Current vs. Required</h2>
+            <div class="comparison-container">
+                <div class="comparison-card">
+                    <h3 class="comparison-title">🌍 Regional Recycling Rates (2024)</h3>
+                    <div class="bar-chart">
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>🇪🇺 European Union</span>
+                                <span>~85% collection mandate</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill bar-current" style="width: 85%;">85%</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>🇯🇵 Japan</span>
+                                <span>Voluntary programs</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill bar-current" style="width: 20%;">20%</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>🇺🇸 United States</span>
+                                <span>State-level policies</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill bar-current" style="width: 10%;">10%</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>🇨🇳 China</span>
+                                <span>Emerging infrastructure</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill bar-current" style="width: 5%;">5%</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>🌐 Global Average</span>
+                                <span>Limited infrastructure</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill bar-current" style="width: 10%;">10%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="comparison-card">
+                    <h3 class="comparison-title">🎯 2050 Recycling Targets</h3>
+                    <div class="bar-chart">
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>IEA Net Zero Pathway</span>
+                                <span>Required for sustainability</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill bar-target" style="width: 95%;">95%</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>IRENA Projection</span>
+                                <span>Optimistic scenario</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill bar-projected" style="width: 80%;">80%</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>EU Extended Mandate</span>
+                                <span>Regulatory target</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill bar-target" style="width: 90%;">90%</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>Business as Usual</span>
+                                <span>Without intervention</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill bar-current" style="width: 25%;">25%</div>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <div class="bar-label">
+                                <span>Gap to Close</span>
+                                <span>Current → Target</span>
+                            </div>
+                            <div class="bar-track">
+                                <div class="bar-fill" style="width: 85%; background: linear-gradient(90deg, #ef4444, #f59e0b);">85%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="timeline-section animate-in">
+            <h2 class="section-title">📅 Solar Waste Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2024</div>
+                        <div class="timeline-text">First generation of utility-scale installations approaching end-of-life. Recycling infrastructure nascent.</div>
+                        <div class="timeline-stat">~500,000 tonnes/year</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2030</div>
+                        <div class="timeline-text">Major wave of residential panels from 2000s reaching end-of-life. EU regulations fully enforced.</div>
+                        <div class="timeline-stat">~8 million tonnes cumulative</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2040</div>
+                        <div class="timeline-text">Peak installation decade (2010s) panels retiring. Recycling becomes economically viable at scale.</div>
+                        <div class="timeline-stat">~30 million tonnes cumulative</div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-year">2050</div>
+                        <div class="timeline-text">Critical decision point: Without 90%+ recycling, solar waste becomes major environmental burden.</div>
+                        <div class="timeline-stat">~78 million tonnes cumulative</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section animate-in">
+            <h2 class="cta-title">🌱 The Opportunity</h2>
+            <p class="cta-text">Establishing robust recycling infrastructure today ensures solar energy remains truly sustainable. Every panel recycled closes the loop.</p>
+            <div class="cta-stats">
+                <div class="cta-stat">
+                    <div class="cta-stat-value">90%</div>
+                    <div class="cta-stat-label">Material Recovery Possible</div>
+                </div>
+                <div class="cta-stat">
+                    <div class="cta-stat-value">60%</div>
+                    <div class="cta-stat-label">CO₂ Reduction vs. Virgin Materials</div>
+                </div>
+                <div class="cta-stat">
+                    <div class="cta-stat-value">2M+</div>
+                    <div class="cta-stat-label">Potential Green Jobs by 2050</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Interactive Infographic: Solar Panel Circular Economy</p>
+            <div class="footer-sources">
+                <p>Data Sources: IRENA (2024), IEA PVPS, European Commission WEEE Directive, NREL, Solar Energy Industries Association</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-icon" id="modal-icon">♻️</div>
+            <h3 class="modal-title" id="modal-title">Stage Title</h3>
+            <p class="modal-text" id="modal-text">Stage description</p>
+            <div class="modal-stats" id="modal-stats"></div>
+        </div>
+    </div>
+
+    <script>
+        // Stage Details Data
+        const stageDetails = {
+            1: {
+                icon: '⛏️',
+                title: 'Raw Material Extraction',
+                text: 'Mining and processing of key materials: silica sand for silicon, bauxite for aluminum, copper ore, and silver. This energy-intensive phase can be reduced by 95% through effective recycling.',
+                stats: [
+                    { value: '11 kg', label: 'Silicon per kW' },
+                    { value: '20 kg', label: 'Aluminum per panel' },
+                    { value: '1.5 kg', label: 'Copper per panel' },
+                    { value: '20 g', label: 'Silver per panel' }
+                ]
+            },
+            2: {
+                icon: '🏭',
+                title: 'Manufacturing',
+                text: 'Polysilicon purification, wafer slicing, cell fabrication, and module assembly. China produces 80%+ of global panels. Manufacturing emissions: 20-50g CO₂/kWh over lifetime.',
+                stats: [
+                    { value: '1,000°C', label: 'Silicon purification' },
+                    { value: '48 hrs', label: 'Cell processing' },
+                    { value: '80%', label: 'China market share' },
+                    { value: '25 GW', label: 'Monthly production' }
+                ]
+            },
+            3: {
+                icon: '🚚',
+                title: 'Distribution',
+                text: 'Global shipping networks transport panels from manufacturing hubs (primarily Asia) to installation sites worldwide. Packaging materials add to end-of-life waste stream.',
+                stats: [
+                    { value: '15,000 km', label: 'Avg. transport distance' },
+                    { value: '5%', label: 'of panel cost' },
+                    { value: '22 kg', label: 'Panel weight avg.' },
+                    { value: '2%', label: 'Damage in transit' }
+                ]
+            },
+            4: {
+                icon: '🔧',
+                title: 'Installation',
+                text: 'Mounting, wiring, and grid connection. Residential installations average 2-3 days; utility-scale projects span months. Proper installation ensures maximum 25-30 year lifespan.',
+                stats: [
+                    { value: '6.5 kW', label: 'Avg. residential size' },
+                    { value: '$2.75/W', label: 'Installed cost (US)' },
+                    { value: '20%', label: 'Efficiency avg.' },
+                    { value: '95%+', label: 'Inverter efficiency' }
+                ]
+            },
+            5: {
+                icon: '☀️',
+                title: 'Operation',
+                text: 'Power generation phase lasting 25-30 years. Panels degrade ~0.5% annually. Minimal maintenance required. Total energy payback: 1-4 years depending on location.',
+                stats: [
+                    { value: '25-30 yrs', label: 'Typical lifespan' },
+                    { value: '0.5%/yr', label: 'Degradation rate' },
+                    { value: '1,500 kWh', label: 'Annual output/kW' },
+                    { value: '80%', label: 'Warranty threshold' }
+                ]
+            },
+            6: {
+                icon: '📋',
+                title: 'Collection',
+                text: 'End-of-life panels must be collected from diverse locations. EU requires producer responsibility; elsewhere, collection infrastructure is limited. Logistics are a major challenge.',
+                stats: [
+                    { value: '85%', label: 'EU collection target' },
+                    { value: '<10%', label: 'Global collection rate' },
+                    { value: '$15-25', label: 'Collection cost/panel' },
+                    { value: '50 km', label: 'Avg. to recycler' }
+                ]
+            },
+            7: {
+                icon: '♻️',
+                title: 'Recycling',
+                text: 'Multi-step process: frame removal (mechanical), glass separation, cell processing (thermal/chemical). Advanced methods recover 95%+ of materials. Current capacity: severely limited.',
+                stats: [
+                    { value: '95%', label: 'Potential recovery' },
+                    { value: '3-5', label: 'Recycling facilities (US)' },
+                    { value: '$12-25', label: 'Processing cost/panel' },
+                    { value: '~10', label: 'Global major recyclers' }
+                ]
+            },
+            8: {
+                icon: '🔄',
+                title: 'Reintegration',
+                text: 'Recovered materials re-enter supply chain. Recycled silicon can match virgin quality. Aluminum and glass easily reprocessed. Creates closed-loop sustainable system.',
+                stats: [
+                    { value: '60%', label: 'CO₂ savings vs. virgin' },
+                    { value: '96%', label: 'Al recyclability' },
+                    { value: '4x', label: 'Silver value retained' },
+                    { value: '$15B', label: '2050 material value' }
+                ]
+            }
+        };
+
+        // Create floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 10) + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Animate elements on scroll
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            elements.forEach(el => observer.observe(el));
+        }
+
+        // Counter animation
+        function animateCounters() {
+            const counters = [
+                { el: 'stat-installed', end: 1.6, suffix: ' TW', decimals: 1 },
+                { el: 'stat-waste', end: 78, suffix: 'M', decimals: 0 },
+                { el: 'stat-recycled', end: 10, suffix: '%', decimals: 0 }
+            ];
+
+            counters.forEach(counter => {
+                const element = document.getElementById(counter.el);
+                if (!element) return;
+
+                let current = 0;
+                const increment = counter.end / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= counter.end) {
+                        current = counter.end;
+                        clearInterval(timer);
+                    }
+                    element.textContent = current.toFixed(counter.decimals) + counter.suffix;
+                }, 30);
+            });
+        }
+
+        // Modal functions
+        function openModal(stage) {
+            const data = stageDetails[stage];
+            if (!data) return;
+
+            document.getElementById('modal-icon').textContent = data.icon;
+            document.getElementById('modal-title').textContent = data.title;
+            document.getElementById('modal-text').textContent = data.text;
+
+            const statsContainer = document.getElementById('modal-stats');
+            statsContainer.innerHTML = data.stats.map(stat => `
+                <div class="modal-stat">
+                    <div class="modal-stat-value">${stat.value}</div>
+                    <div class="modal-stat-label">${stat.label}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Stage click handlers
+        document.querySelectorAll('.stage').forEach(stage => {
+            stage.addEventListener('click', function() {
+                const stageNum = this.dataset.stage;
+                openModal(stageNum);
+            });
+        });
+
+        // Close modal on outside click
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Animate recovery bars
+        function animateRecoveryBars() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.querySelectorAll('.recovery-fill, .bar-fill').forEach(bar => {
+                            const width = bar.style.width;
+                            bar.style.width = '0%';
+                            setTimeout(() => {
+                                bar.style.width = width;
+                            }, 100);
+                        });
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            document.querySelectorAll('.materials-grid, .comparison-card').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            createParticles();
+            animateOnScroll();
+            setTimeout(animateCounters, 500);
+            animateRecoveryBars();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

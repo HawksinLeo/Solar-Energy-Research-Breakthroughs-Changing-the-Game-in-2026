@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Case Study: PERC Solar Technology Journey</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: #1a202c;
+        }
+
+        .case-study-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Main Case Study Box */
+        .case-study-box {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Header Section */
+        .case-study-header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 50%, #1e3a5f 100%);
+            color: #fff;
+            padding: 35px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .case-study-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .case-study-header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0,200,150,0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-badge .icon {
+            font-size: 1rem;
+        }
+
+        .case-study-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .case-study-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 400;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tech-icon {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 5rem;
+            opacity: 0.2;
+        }
+
+        /* Key Metrics Bar */
+        .metrics-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            background: linear-gradient(135deg, #0f2744 0%, #1a3a5c 100%);
+            border-bottom: 3px solid #00c896;
+        }
+
+        @media (max-width: 700px) {
+            .metrics-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .metric-item {
+            padding: 25px 20px;
+            text-align: center;
+            color: #fff;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .metric-item:last-child {
+            border-right: none;
+        }
+
+        .metric-item:hover {
+            background: rgba(0, 200, 150, 0.1);
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00c896;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            opacity: 0.8;
+        }
+
+        /* Content Body */
+        .case-study-body {
+            padding: 40px;
+        }
+
+        /* Summary Text */
+        .summary-section {
+            margin-bottom: 35px;
+        }
+
+        .summary-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #4a5568;
+            text-align: justify;
+        }
+
+        .summary-text .highlight {
+            background: linear-gradient(120deg, #e6fffa 0%, #b2f5ea 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #047857;
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            margin: 40px 0;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 24px;
+            background: linear-gradient(180deg, #00c896, #1e3a5f);
+            border-radius: 2px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #00c896, #1e3a5f, #00c896);
+            border-radius: 2px;
+        }
+
+        @media (max-width: 700px) {
+            .timeline::before {
+                left: 20px;
+            }
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: calc(50% + 30px);
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-left: calc(50% + 30px);
+            padding-right: 0;
+        }
+
+        @media (max-width: 700px) {
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                padding-left: 50px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 18px;
+            height: 18px;
+            background: #fff;
+            border: 4px solid #00c896;
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+        @media (max-width: 700px) {
+            .timeline-dot {
+                left: 20px;
+            }
+        }
+
+        .timeline-content {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 350px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: #00c896;
+        }
+
+        .timeline-year {
+            display: inline-block;
+            background: linear-gradient(135deg, #1e3a5f, #2d5a87);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+
+        .timeline-desc {
+            font-size: 0.85rem;
+            color: #718096;
+            line-height: 1.5;
+        }
+
+        /* Progress Charts */
+        .charts-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        @media (max-width: 700px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .chart-card {
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .chart-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chart-title .icon {
+            font-size: 1.2rem;
+        }
+
+        .progress-item {
+            margin-bottom: 18px;
+        }
+
+        .progress-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+        }
+
+        .progress-label {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .progress-value {
+            font-weight: 700;
+            color: #1e3a5f;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1.5s ease;
+            position: relative;
+        }
+
+        .progress-fill.efficiency {
+            background: linear-gradient(90deg, #00c896, #00a67d);
+        }
+
+        .progress-fill.cost {
+            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Challenges Section */
+        .challenges-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid #f59e0b;
+        }
+
+        .challenges-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #92400e;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .challenge-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .challenge-icon {
+            width: 30px;
+            height: 30px;
+            background: #f59e0b;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+
+        .challenge-text {
+            font-size: 0.85rem;
+            color: #78350f;
+            line-height: 1.5;
+        }
+
+        .challenge-text strong {
+            color: #92400e;
+        }
+
+        /* Success Outcome */
+        .outcome-section {
+            background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid #10b981;
+        }
+
+        .outcome-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #047857;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .outcome-stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .outcome-stat {
+            text-align: center;
+        }
+
+        .outcome-stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #047857;
+        }
+
+        .outcome-stat-label {
+            font-size: 0.8rem;
+            color: #065f46;
+            margin-top: 5px;
+        }
+
+        /* Quote Section */
+        .quote-section {
+            position: relative;
+            padding: 30px;
+            background: #f7fafc;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .quote-mark {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 4rem;
+            color: #00c896;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: #4a5568;
+            line-height: 1.7;
+            padding-left: 40px;
+        }
+
+        .quote-author {
+            margin-top: 15px;
+            padding-left: 40px;
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .quote-author strong {
+            color: #1e3a5f;
+        }
+
+        /* Footer */
+        .case-study-footer {
+            background: #f7fafc;
+            padding: 25px 40px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-sources {
+            font-size: 0.75rem;
+            color: #718096;
+        }
+
+        .footer-sources strong {
+            color: #4a5568;
+        }
+
+        .footer-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #e2e8f0;
+            color: #4a5568;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        /* Interactive Elements */
+        .expand-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: linear-gradient(135deg, #1e3a5f, #2d5a87);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .expand-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(30, 58, 95, 0.3);
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .expandable-content.expanded {
+            max-height: 1000px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+            }
+            .case-study-box {
+                box-shadow: none;
+                border: 1px solid #e2e8f0;
+            }
+            .expand-btn {
+                display: none;
+            }
+            .expandable-content {
+                max-height: none;
+            }
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="case-study-container">
+        <div class="case-study-box">
+            <!-- Header -->
+            <header class="case-study-header">
+                <div class="header-badge">
+                    <span class="icon">📋</span>
+                    Case Study — Technology Commercialization
+                </div>
+                <h1 class="case-study-title">PERC Solar Cell Technology</h1>
+                <p class="case-study-subtitle">From Laboratory Discovery to Global Market Dominance (1983–2024)</p>
+                <div class="tech-icon">☀️</div>
+            </header>
+
+            <!-- Key Metrics Bar -->
+            <div class="metrics-bar">
+                <div class="metric-item">
+                    <div class="metric-value">40 yrs</div>
+                    <div class="metric-label">Development Timeline</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">+6.5%</div>
+                    <div class="metric-label">Absolute Efficiency Gain</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">-90%</div>
+                    <div class="metric-label">Cost Reduction</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">80%</div>
+                    <div class="metric-label">Global Market Share</div>
+                </div>
+            </div>
+
+            <!-- Body Content -->
+            <div class="case-study-body">
+                <!-- Summary Section -->
+                <div class="summary-section fade-in">
+                    <p class="summary-text">
+                        <strong>Passivated Emitter and Rear Cell (PERC)</strong> technology exemplifies the challenging journey from laboratory innovation to commercial dominance. First developed at the <span class="highlight">University of New South Wales in 1983</span> by Dr. Martin Green's team, PERC adds a dielectric passivation layer to the rear of conventional silicon cells, reducing electron recombination and boosting light absorption through internal reflection.
+                    </p>
+                    <br>
+                    <p class="summary-text">
+                        Despite demonstrating <span class="highlight">22.8% efficiency by 1989</span>—a world record—commercial adoption stalled for nearly two decades due to manufacturing complexity and cost premiums. The breakthrough came when Chinese manufacturers, particularly <span class="highlight">LONGi Green Energy and JA Solar</span>, invested heavily in production equipment and process optimization starting in 2015. By solving challenges in rear-surface aluminum paste formulation and laser contact opening, they achieved manufacturing costs below $0.20/W by 2020. Today, PERC commands <span class="highlight">over 80% of global module production</span>, with efficiencies reaching 24%+ commercially—proving that patience, persistent R&D, and manufacturing scale ultimately bridge the "valley of death" between laboratory and market.
+                    </p>
+                </div>
+
+                <!-- Timeline Section -->
+                <div class="timeline-section fade-in">
+                    <h3 class="section-title">Development Timeline</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-year">1983</span>
+                                <div class="timeline-title">Laboratory Invention</div>
+                                <div class="timeline-desc">Dr. Martin Green's team at UNSW develops the PERC concept, adding rear passivation layer to reduce recombination losses.</div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-year">1989</span>
+                                <div class="timeline-title">World Record Achieved</div>
+                                <div class="timeline-desc">UNSW demonstrates 22.8% efficiency—a record that stood for years and proved the technology's potential.</div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-year">1989–2012</span>
+                                <div class="timeline-title">The "Valley of Death"</div>
+                                <div class="timeline-desc">Two decades of limited commercialization due to high production costs, equipment limitations, and incumbent Al-BSF technology.</div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-year">2012–2015</span>
+                                <div class="timeline-title">Early Commercial Pilots</div>
+                                <div class="timeline-desc">SolarWorld and select manufacturers begin low-volume PERC production. Equipment costs remain prohibitive for mass adoption.</div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-year">2016–2018</span>
+                                <div class="timeline-title">Manufacturing Breakthrough</div>
+                                <div class="timeline-desc">Chinese manufacturers crack cost-effective production. LONGi, JA Solar, and Trina invest billions in PERC capacity.</div>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <span class="timeline-year">2020–2024</span>
+                                <div class="timeline-title">Global Dominance</div>
+                                <div class="timeline-desc">PERC captures 80%+ market share. Commercial efficiencies exceed 23%, with costs below $0.15/W at scale.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Progress Charts -->
+                <div class="charts-section fade-in">
+                    <div class="chart-card">
+                        <h4 class="chart-title"><span class="icon">📈</span> Efficiency Progression</h4>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">1983 — Initial Lab Demo</span>
+                                <span class="progress-value">20.0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill efficiency" style="width: 66%;"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">1989 — World Record</span>
+                                <span class="progress-value">22.8%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill efficiency" style="width: 76%;"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">2016 — Commercial Launch</span>
+                                <span class="progress-value">21.5%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill efficiency" style="width: 72%;"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">2024 — Current Best</span>
+                                <span class="progress-value">24.5%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill efficiency" style="width: 82%;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="chart-card">
+                        <h4 class="chart-title"><span class="icon">💰</span> Cost Reduction Journey</h4>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">2010 — Pre-Commercial</span>
+                                <span class="progress-value">$2.00/W</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill cost" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">2016 — Early Mass Production</span>
+                                <span class="progress-value">$0.50/W</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill cost" style="width: 25%;"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">2020 — Scale Achieved</span>
+                                <span class="progress-value">$0.20/W</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill cost" style="width: 10%;"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-header">
+                                <span class="progress-label">2024 — Current</span>
+                                <span class="progress-value">$0.10/W</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill cost" style="width: 5%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenges Section -->
+                <div class="challenges-section fade-in">
+                    <h4 class="challenges-title">⚠️ Scaling Challenges Overcome</h4>
+                    <div class="challenges-grid">
+                        <div class="challenge-item">
+                            <div class="challenge-icon">1</div>
+                            <div class="challenge-text">
+                                <strong>Rear Passivation Deposition:</strong> Required development of cost-effective PECVD/ALD equipment for dielectric layer application at production speeds.
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">2</div>
+                            <div class="challenge-text">
+                                <strong>Laser Contact Opening:</strong> Precision laser processing for local rear contacts initially caused micro-cracks; solved through optimized pulse parameters.
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">3</div>
+                            <div class="challenge-text">
+                                <strong>Aluminum Paste Formulation:</strong> Standard Al paste damaged passivation layers; new paste chemistries required multi-year R&D partnerships.
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-icon">4</div>
+                            <div class="challenge-text">
+                                <strong>LID/LeTID Degradation:</strong> Light-induced degradation issues required additional hydrogenation and regeneration process steps.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Expandable Additional Content -->
+                <button class="expand-btn" id="expandBtn">
+                    <span>View Full Technical Details</span>
+                    <span id="expandIcon">▼</span>
+                </button>
+
+                <div class="expandable-content" id="expandableContent">
+                    <!-- Quote Section -->
+                    <div class="quote-section fade-in">
+                        <div class="quote-mark">"</div>
+                        <p class="quote-text">
+                            PERC's journey shows that breakthrough technologies often require decades of patient development. The key was not just the science—it was finding manufacturing partners willing to invest in scaling before the economics were proven.
+                        </p>
+                        <p class="quote-author">
+                            — <strong>Dr. Martin Green</strong>, UNSW, 2022 Interview
+                        </p>
+                    </div>
+
+                    <!-- Success Outcome -->
+                    <div class="outcome-section fade-in">
+                        <h4 class="outcome-title">✅ Commercial Success Metrics (2024)</h4>
+                        <div class="outcome-stats">
+                            <div class="outcome-stat">
+                                <div class="outcome-stat-value">350+ GW</div>
+                                <div class="outcome-stat-label">Annual Production Capacity</div>
+                            </div>
+                            <div class="outcome-stat">
+                                <div class="outcome-stat-value">80%+</div>
+                                <div class="outcome-stat-label">Global Market Share</div>
+                            </div>
+                            <div class="outcome-stat">
+                                <div class="outcome-stat-value">50+</div>
+                                <div class="outcome-stat-label">Major Manufacturers</div>
+                            </div>
+                            <div class="outcome-stat">
+                                <div class="outcome-stat-value">$0.10/W</div>
+                                <div class="outcome-stat-label">Best-in-Class Cost</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer class="case-study-footer">
+                <div class="footer-sources">
+                    <strong>Sources:</strong> UNSW SPREE, ITRPV Roadmap 2024, BloombergNEF, NREL Best Research-Cell Efficiency Chart, PV Magazine
+                </div>
+                <div class="footer-tags">
+                    <span class="tag">Solar PV</span>
+                    <span class="tag">PERC</span>
+                    <span class="tag">Technology Transfer</span>
+                    <span class="tag">Manufacturing Scale</span>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Expand/Collapse functionality
+        const expandBtn = document.getElementById('expandBtn');
+        const expandableContent = document.getElementById('expandableContent');
+        const expandIcon = document.getElementById('expandIcon');
+        let isExpanded = false;
+
+        expandBtn.addEventListener('click', () => {
+            isExpanded = !isExpanded;
+            expandableContent.classList.toggle('expanded');
+            expandIcon.textContent = isExpanded ? '▲' : '▼';
+            expandBtn.querySelector('span:first-child').textContent = 
+                isExpanded ? 'Hide Technical Details' : 'View Full Technical Details';
+            
+            if (isExpanded) {
+                setTimeout(() => {
+                    expandableContent.querySelectorAll('.fade-in').forEach(el => {
+                        el.classList.add('visible');
+                    });
+                }, 100);
+            }
+        });
+
+        // Animate elements on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Animate progress bars on scroll
+        const progressObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.progress-fill').forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 200);
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.chart-card').forEach(el => {
+            progressObserver.observe(el);
+        });
+
+        // Counter animation for metrics
+        function animateCounter(element, target, suffix = '') {
+            let current = 0;
+            const increment = target / 30;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.round(current) + suffix;
+            }, 30);
+        }
+
+        // Initialize counters when visible
+        const metricsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Animation already handled by CSS, but could add JS counters here
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.metrics-bar').forEach(el => {
+            metricsObserver.observe(el);
+        });
+    </script>
+</body>
+</html>

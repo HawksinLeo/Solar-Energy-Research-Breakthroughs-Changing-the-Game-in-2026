@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Quote: Solar Technology Adoption & Risk Assessment</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quote-container {
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* Main Quote Box */
+        .quote-box {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Accent Bar */
+        .accent-bar {
+            height: 6px;
+            background: linear-gradient(90deg, #0369a1, #0ea5e9, #38bdf8, #0ea5e9, #0369a1);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Quote Header */
+        .quote-header {
+            padding: 30px 40px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .quote-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0369a1, #0ea5e9);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .quote-category {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .category-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #0ea5e9;
+            font-weight: 600;
+        }
+
+        .category-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 1.1rem;
+            color: #1e293b;
+            font-weight: 600;
+        }
+
+        /* Main Quote Content */
+        .quote-content {
+            padding: 40px;
+            position: relative;
+        }
+
+        .quote-mark {
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            font-size: 6rem;
+            color: #0ea5e9;
+            opacity: 0.1;
+            font-family: Georgia, serif;
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        .quote-mark.end {
+            top: auto;
+            bottom: -20px;
+            left: auto;
+            right: 25px;
+            transform: rotate(180deg);
+        }
+
+        .quote-text {
+            font-size: 1.4rem;
+            line-height: 1.9;
+            color: #334155;
+            position: relative;
+            z-index: 1;
+            font-style: italic;
+            text-align: justify;
+            padding: 0 20px;
+        }
+
+        .quote-text .highlight {
+            background: linear-gradient(120deg, #e0f2fe 0%, #bae6fd 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-style: normal;
+            font-weight: 600;
+            color: #0369a1;
+        }
+
+        /* Attribution Section */
+        .attribution {
+            padding: 30px 40px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .author-photo {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0369a1, #0ea5e9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.8rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+            flex-shrink: 0;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .author-details {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .author-name {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+
+        .author-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 2px;
+        }
+
+        .author-org {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.85rem;
+            color: #0ea5e9;
+            font-weight: 600;
+        }
+
+        .source-info {
+            text-align: right;
+            flex-shrink: 0;
+        }
+
+        .source-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #94a3b8;
+            margin-bottom: 5px;
+        }
+
+        .source-publication {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.9rem;
+            color: #475569;
+            font-weight: 500;
+        }
+
+        .source-date {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        /* Context Box */
+        .context-box {
+            padding: 25px 40px;
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .context-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #64748b;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .context-text {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95rem;
+            color: #475569;
+            line-height: 1.7;
+        }
+
+        /* Key Metrics */
+        .metrics-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid #e2e8f0;
+        }
+
+        @media (max-width: 600px) {
+            .metrics-bar {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .metric-item {
+            padding: 25px;
+            text-align: center;
+            border-right: 1px solid #e2e8f0;
+            transition: background 0.3s ease;
+        }
+
+        .metric-item:last-child {
+            border-right: none;
+        }
+
+        .metric-item:hover {
+            background: #f8fafc;
+        }
+
+        .metric-value {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0369a1;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* Additional Quotes Carousel */
+        .additional-quotes {
+            margin-top: 30px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .carousel-header {
+            padding: 20px 30px;
+            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .carousel-title {
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .carousel-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .carousel-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: transparent;
+            color: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .carousel-content {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            padding: 30px;
+        }
+
+        .mini-quote {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .mini-quote-mark {
+            font-size: 3rem;
+            color: #0ea5e9;
+            opacity: 0.3;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .mini-quote-content {
+            flex: 1;
+        }
+
+        .mini-quote-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #475569;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .mini-attribution {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .mini-author-photo {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #64748b, #94a3b8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-weight: 600;
+        }
+
+        .mini-author-info {
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .mini-author-name {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .mini-author-role {
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* Carousel Indicators */
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 20px;
+            background: #f8fafc;
+        }
+
+        .indicator {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .indicator.active {
+            background: #0ea5e9;
+            transform: scale(1.2);
+        }
+
+        /* Verification Badge */
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #ecfdf5;
+            color: #047857;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .verification-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: #fff;
+                padding: 20px;
+            }
+            
+            .quote-box {
+                box-shadow: none;
+                border: 1px solid #e2e8f0;
+            }
+            
+            .carousel-controls {
+                display: none;
+            }
+            
+            .accent-bar {
+                animation: none;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .quote-content {
+                padding: 30px 20px;
+            }
+            
+            .quote-text {
+                font-size: 1.15rem;
+                padding: 0;
+            }
+            
+            .attribution {
+                padding: 20px;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .source-info {
+                text-align: center;
+            }
+            
+            .quote-header {
+                padding: 20px;
+            }
+        }
+
+        /* Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in:nth-child(2) { animation-delay: 0.2s; }
+        .fade-in:nth-child(3) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="quote-container">
+        <!-- Main Quote Box -->
+        <div class="quote-box fade-in">
+            <div class="accent-bar"></div>
+            
+            <!-- Header -->
+            <div class="quote-header">
+                <div class="quote-icon">💡</div>
+                <div class="quote-category">
+                    <span class="category-label">Expert Analysis</span>
+                    <span class="category-title">Technology Adoption & Procurement Risk Assessment</span>
+                </div>
+            </div>
+            
+            <!-- Main Quote -->
+            <div class="quote-content">
+                <span class="quote-mark">"</span>
+                <p class="quote-text">
+                    In utility-scale solar procurement, we're seeing a fundamental shift in how investors assess technology risk. The traditional 
+                    <span class="highlight">25-year bankability horizon</span> is being re-evaluated as next-generation technologies like TOPCon and HJT demonstrate field performance within 
+                    <span class="highlight">3-5 years of commercial introduction</span>. Our analysis shows that projects adopting newer cell architectures are achieving 
+                    <span class="highlight">2-4% higher energy yields</span> while maintaining comparable degradation warranties. The key risk metric has evolved from 'proven technology only' to 
+                    <span class="highlight">'verified manufacturing scale plus accelerated testing protocols.'</span> Developers who wait for perfect certainty will find themselves procuring yesterday's technology at tomorrow's prices.
+                </p>
+                <span class="quote-mark end">"</span>
+            </div>
+            
+            <!-- Attribution -->
+            <div class="attribution">
+                <div class="author-photo">JC</div>
+                <div class="author-details">
+                    <div class="author-name">Jenny Chase</div>
+                    <div class="author-title">Head of Solar Analysis</div>
+                    <div class="author-org">BloombergNEF</div>
+                    <div class="verification-badge">
+                        <svg viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+                        </svg>
+                        Verified Source
+                    </div>
+                </div>
+                <div class="source-info">
+                    <div class="source-label">Source</div>
+                    <div class="source-publication">BNEF Solar Summit 2024</div>
+                    <div class="source-date">Panel Discussion, April 2024</div>
+                </div>
+            </div>
+            
+            <!-- Context Box -->
+            <div class="context-box">
+                <div class="context-title">
+                    <span>📌</span>
+                    Context
+                </div>
+                <p class="context-text">
+                    This analysis was presented during the annual BloombergNEF Solar Summit, addressing procurement officers and project developers facing technology selection decisions for utility-scale projects exceeding 100 MW. The remarks reflect BNEF's tracking of over $400 billion in annual solar investment flows and technology adoption patterns across 50+ markets.
+                </p>
+            </div>
+            
+            <!-- Key Metrics -->
+            <div class="metrics-bar">
+                <div class="metric-item">
+                    <div class="metric-value">3-5 yrs</div>
+                    <div class="metric-label">New Tech Validation Period</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">2-4%</div>
+                    <div class="metric-label">Higher Energy Yields</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">$400B+</div>
+                    <div class="metric-label">Annual Solar Investment</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Quotes Carousel -->
+        <div class="additional-quotes fade-in">
+            <div class="carousel-header">
+                <span class="carousel-title">Related Expert Perspectives</span>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prevBtn">◀</button>
+                    <button class="carousel-btn" id="nextBtn">▶</button>
+                </div>
+            </div>
+            
+            <div class="carousel-content">
+                <div class="carousel-track" id="carouselTrack">
+                    <!-- Slide 1 -->
+                    <div class="carousel-slide">
+                        <div class="mini-quote">
+                            <span class="mini-quote-mark">"</span>
+                            <div class="mini-quote-content">
+                                <p class="mini-quote-text">
+                                    The risk calculus for solar procurement has inverted. Five years ago, choosing unproven technology was the risk. Today, the greater risk is locking in legacy technology that will underperform newer alternatives by year five of a thirty-year asset life. Our due diligence now focuses heavily on manufacturer R&D pipelines and upgrade pathways.
+                                </p>
+                                <div class="mini-attribution">
+                                    <div class="mini-author-photo">MS</div>
+                                    <div class="mini-author-info">
+                                        <div class="mini-author-name">Martin Schachinger</div>
+                                        <div class="mini-author-role">Founder & CEO, pvXchange | Market Analyst</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="carousel-slide">
+                        <div class="mini-quote">
+                            <span class="mini-quote-mark">"</span>
+                            <div class="mini-quote-content">
+                                <p class="mini-quote-text">
+                                    Financial institutions are adapting their bankability frameworks. We've moved from requiring 10+ years of field data to accepting rigorous accelerated testing combined with 2-3 years of monitored deployment. The IEC TS 63209 series for extended stress testing has been instrumental in de-risking emerging module technologies for project finance.
+                                </p>
+                                <div class="mini-attribution">
+                                    <div class="mini-author-photo">RG</div>
+                                    <div class="mini-author-info">
+                                        <div class="mini-author-name">Ravi Ganesh</div>
+                                        <div class="mini-author-role">Managing Director, Sustainable Finance | ING Bank</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="carousel-slide">
+                        <div class="mini-quote">
+                            <span class="mini-quote-mark">"</span>
+                            <div class="mini-quote-content">
+                                <p class="mini-quote-text">
+                                    Our procurement data across 15 GW of utility projects shows a clear trend: TOPCon adoption jumped from 5% to 35% of new contracts in just 18 months. The technology risk premium has essentially disappeared as tier-1 manufacturers scaled production. Early adopters are now benefiting from both higher yields and lower per-watt costs.
+                                </p>
+                                <div class="mini-attribution">
+                                    <div class="mini-author-photo">MW</div>
+                                    <div class="mini-author-info">
+                                        <div class="mini-author-name">MJ Shiao</div>
+                                        <div class="mini-author-role">Head of Global Solar Research | Wood Mackenzie</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 4 -->
+                    <div class="carousel-slide">
+                        <div class="mini-quote">
+                            <span class="mini-quote-mark">"</span>
+                            <div class="mini-quote-content">
+                                <p class="mini-quote-text">
+                                    The insurance industry's perspective on solar technology risk has matured significantly. We now have actuarial data spanning multiple cell generations. What matters most is manufacturing quality control and supply chain traceability—not whether a technology has been deployed for a decade. Performance warranties backed by investment-grade manufacturers are what unlock competitive insurance pricing.
+                                </p>
+                                <div class="mini-attribution">
+                                    <div class="mini-author-photo">SH</div>
+                                    <div class="mini-author-info">
+                                        <div class="mini-author-name">Sarah Harmon</div>
+                                        <div class="mini-author-role">Renewable Energy Practice Lead | Munich Re</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Carousel Indicators -->
+            <div class="carousel-indicators">
+                <div class="indicator active" data-slide="0"></div>
+                <div class="indicator" data-slide="1"></div>
+                <div class="indicator" data-slide="2"></div>
+                <div class="indicator" data-slide="3"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Carousel functionality
+        const track = document.getElementById('carouselTrack');
+        const indicators = document.querySelectorAll('.indicator');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+        const totalSlides = 4;
+
+        function updateCarousel() {
+            track.style.transform = `translateX(-${currentSlide * 100}%)`;
+            indicators.forEach((ind, idx) => {
+                ind.classList.toggle('active', idx === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', () => {
+                currentSlide = parseInt(indicator.dataset.slide);
+                updateCarousel();
+            });
+        });
+
+        // Auto-advance carousel
+        let autoAdvance = setInterval(nextSlide, 8000);
+
+        // Pause on hover
+        const carouselContent = document.querySelector('.carousel-content');
+        carouselContent.addEventListener('mouseenter', () => {
+            clearInterval(autoAdvance);
+        });
+        carouselContent.addEventListener('mouseleave', () => {
+            autoAdvance = setInterval(nextSlide, 8000);
+        });
+
+        // Touch support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carouselContent.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        carouselContent.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                prevSlide();
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', e => {
+            if (e.key === 'ArrowLeft') prevSlide();
+            if (e.key === 'ArrowRight') nextSlide();
+        });
+    </script>
+</body>
+</html>

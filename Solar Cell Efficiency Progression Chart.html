@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solar Cell Efficiency Progression Chart (1954-2035)</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(59, 130, 246, 0.4);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #60a5fa;
+            margin-bottom: 20px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Main Chart Container */
+        .chart-section {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chart-title .icon {
+            font-size: 1.5rem;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            padding: 10px 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+        }
+
+        .control-btn.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 550px;
+            margin-bottom: 20px;
+        }
+
+        /* Custom Legend */
+        .custom-legend {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .legend-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .legend-item.disabled {
+            opacity: 0.4;
+        }
+
+        .legend-line {
+            width: 35px;
+            height: 4px;
+            border-radius: 2px;
+        }
+
+        .legend-line.dashed {
+            background: repeating-linear-gradient(
+                90deg,
+                currentColor,
+                currentColor 8px,
+                transparent 8px,
+                transparent 12px
+            );
+            height: 3px;
+        }
+
+        .legend-label {
+            font-size: 0.9rem;
+            color: #e2e8f0;
+        }
+
+        /* Milestones Panel */
+        .milestones-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .milestone-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 16px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .milestone-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(96, 165, 250, 0.4);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .milestone-card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .milestone-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .milestone-icon.silicon {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .milestone-icon.perovskite {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .milestone-icon.tandem {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .milestone-card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .milestone-card-subtitle {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .milestone-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .milestone-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .milestone-item:hover {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        .milestone-year {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .milestone-content {
+            flex: 1;
+        }
+
+        .milestone-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+
+        .milestone-desc {
+            font-size: 0.8rem;
+            color: #94a3b8;
+        }
+
+        .milestone-efficiency {
+            font-weight: 700;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .milestone-efficiency.silicon {
+            color: #60a5fa;
+        }
+
+        .milestone-efficiency.perovskite {
+            color: #fbbf24;
+        }
+
+        .milestone-efficiency.tandem {
+            color: #34d399;
+        }
+
+        /* Theoretical Limits Panel */
+        .limits-section {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .limits-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .limits-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .limits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .limit-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .limit-card:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .limit-card.silicon {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .limit-card.perovskite {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .limit-card.tandem {
+            border-left: 4px solid #10b981;
+        }
+
+        .limit-card.multijunction {
+            border-left: 4px solid #a855f7;
+        }
+
+        .limit-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .limit-card.silicon .limit-value { color: #60a5fa; }
+        .limit-card.perovskite .limit-value { color: #fbbf24; }
+        .limit-card.tandem .limit-value { color: #34d399; }
+        .limit-card.multijunction .limit-value { color: #c084fc; }
+
+        .limit-label {
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            margin-bottom: 5px;
+        }
+
+        .limit-desc {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        /* Statistics Bar */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        /* Tooltip Styles */
+        .custom-tooltip {
+            position: absolute;
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            pointer-events: none;
+            z-index: 100;
+            max-width: 280px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .custom-tooltip.visible {
+            opacity: 1;
+        }
+
+        .tooltip-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .tooltip-content {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.5;
+        }
+
+        /* Era Markers */
+        .era-section {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .era-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 20px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .era-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .era-label {
+            font-size: 0.85rem;
+            color: #e2e8f0;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 25px;
+            color: #64748b;
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 30px;
+        }
+
+        .footer a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Projection Info Box */
+        .projection-info {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2));
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .projection-info-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .projection-info-title {
+            font-weight: 600;
+            color: #c4b5fd;
+        }
+
+        .projection-info-text {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .chart-wrapper {
+                height: 400px;
+            }
+            
+            .milestones-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Print */
+        @media print {
+            body {
+                background: #fff;
+                color: #000;
+            }
+            .control-btn, .chart-controls {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header animate">
+            <div class="header-badge">
+                <span>📊</span>
+                <span>Interactive Data Visualization</span>
+            </div>
+            <h1>Solar Cell Efficiency Evolution</h1>
+            <p class="subtitle">70 Years of Photovoltaic Innovation: From Bell Labs' First Practical Cell to Today's Tandem Breakthroughs</p>
+        </header>
+
+        <!-- Statistics Bar -->
+        <div class="stats-bar animate">
+            <div class="stat-card">
+                <div class="stat-value">70</div>
+                <div class="stat-label">Years of Development</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">6% → 47%</div>
+                <div class="stat-label">Efficiency Range</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">8×</div>
+                <div class="stat-label">Improvement Factor</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">26.8%</div>
+                <div class="stat-label">Best Silicon (2024)</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">33.9%</div>
+                <div class="stat-label">Best Tandem (2024)</div>
+            </div>
+        </div>
+
+        <!-- Main Chart -->
+        <div class="chart-section animate">
+            <div class="chart-header">
+                <div class="chart-title">
+                    <span class="icon">📈</span>
+                    <span>Efficiency Progression by Technology (1954-2035)</span>
+                </div>
+                <div class="chart-controls">
+                    <button class="control-btn active" data-view="all">All Technologies</button>
+                    <button class="control-btn" data-view="silicon">Silicon Only</button>
+                    <button class="control-btn" data-view="emerging">Emerging Tech</button>
+                    <button class="control-btn" data-view="projected">With Projections</button>
+                </div>
+            </div>
+            
+            <div class="chart-wrapper">
+                <canvas id="efficiencyChart"></canvas>
+            </div>
+
+            <!-- Custom Legend -->
+            <div class="custom-legend">
+                <div class="legend-item" data-series="silicon">
+                    <div class="legend-line" style="background: #3b82f6;"></div>
+                    <span class="legend-label">Crystalline Silicon</span>
+                </div>
+                <div class="legend-item" data-series="perovskite">
+                    <div class="legend-line" style="background: #f59e0b;"></div>
+                    <span class="legend-label">Perovskite</span>
+                </div>
+                <div class="legend-item" data-series="tandem">
+                    <div class="legend-line" style="background: #10b981;"></div>
+                    <span class="legend-label">Perovskite/Silicon Tandem</span>
+                </div>
+                <div class="legend-item" data-series="multijunction">
+                    <div class="legend-line" style="background: #a855f7;"></div>
+                    <span class="legend-label">III-V Multijunction</span>
+                </div>
+                <div class="legend-item" data-series="limits">
+                    <div class="legend-line dashed" style="color: #ef4444;"></div>
+                    <span class="legend-label">Theoretical Limits</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projection Info -->
+        <div class="projection-info animate">
+            <div class="projection-info-header">
+                <span>🔮</span>
+                <span class="projection-info-title">About Projections (2025-2035)</span>
+            </div>
+            <p class="projection-info-text">
+                Future efficiency projections are based on current R&D trajectories, ITRPV roadmaps, and expert consensus from NREL, Fraunhofer ISE, and leading research institutions. Perovskite projections assume successful resolution of stability challenges. Tandem projections reflect ongoing commercialization efforts by Oxford PV, LONGi, and others. Actual results may vary based on breakthrough discoveries and manufacturing advances.
+            </p>
+        </div>
+
+        <!-- Theoretical Limits -->
+        <div class="limits-section animate">
+            <div class="limits-header">
+                <span style="font-size: 1.5rem;">⚡</span>
+                <span class="limits-title">Theoretical Efficiency Limits (Shockley-Queisser)</span>
+            </div>
+            <div class="limits-grid">
+                <div class="limit-card silicon">
+                    <div class="limit-value">29.4%</div>
+                    <div class="limit-label">Crystalline Silicon</div>
+                    <div class="limit-desc">Single junction, 1.12 eV bandgap</div>
+                </div>
+                <div class="limit-card perovskite">
+                    <div class="limit-value">31%</div>
+                    <div class="limit-label">Perovskite</div>
+                    <div class="limit-desc">Tunable bandgap 1.2-2.3 eV</div>
+                </div>
+                <div class="limit-card tandem">
+                    <div class="limit-value">45%</div>
+                    <div class="limit-label">2-Junction Tandem</div>
+                    <div class="limit-desc">Optimized bandgap pairing</div>
+                </div>
+                <div class="limit-card multijunction">
+                    <div class="limit-value">68%</div>
+                    <div class="limit-label">Infinite Junctions</div>
+                    <div class="limit-desc">Concentrated sunlight</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Milestones -->
+        <div class="milestones-section animate">
+            <!-- Silicon Milestones -->
+            <div class="milestone-card">
+                <div class="milestone-card-header">
+                    <div class="milestone-icon silicon">🔷</div>
+                    <div>
+                        <div class="milestone-card-title">Crystalline Silicon Milestones</div>
+                        <div class="milestone-card-subtitle">70 years of incremental innovation</div>
+                    </div>
+                </div>
+                <div class="milestone-list">
+                    <div class="milestone-item" data-year="1954">
+                        <span class="milestone-year">1954</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">Bell Labs First Practical Cell</div>
+                            <div class="milestone-desc">Chapin, Fuller & Pearson demonstrate silicon PV</div>
+                        </div>
+                        <span class="milestone-efficiency silicon">6%</span>
+                    </div>
+                    <div class="milestone-item" data-year="1983">
+                        <span class="milestone-year">1983</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">PERC Concept Developed</div>
+                            <div class="milestone-desc">UNSW introduces rear passivation</div>
+                        </div>
+                        <span class="milestone-efficiency silicon">18%</span>
+                    </div>
+                    <div class="milestone-item" data-year="1999">
+                        <span class="milestone-year">1999</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">UNSW PERL Record</div>
+                            <div class="milestone-desc">Record stands for 15+ years</div>
+                        </div>
+                        <span class="milestone-efficiency silicon">25%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2017">
+                        <span class="milestone-year">2017</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">Kaneka HBC Record</div>
+                            <div class="milestone-desc">Heterojunction back-contact cell</div>
+                        </div>
+                        <span class="milestone-efficiency silicon">26.7%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2024">
+                        <span class="milestone-year">2024</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">LONGi HJT Record</div>
+                            <div class="milestone-desc">Approaching theoretical limit</div>
+                        </div>
+                        <span class="milestone-efficiency silicon">26.8%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Perovskite Milestones -->
+            <div class="milestone-card">
+                <div class="milestone-card-header">
+                    <div class="milestone-icon perovskite">🔶</div>
+                    <div>
+                        <div class="milestone-card-title">Perovskite Milestones</div>
+                        <div class="milestone-card-subtitle">Fastest efficiency gains in PV history</div>
+                    </div>
+                </div>
+                <div class="milestone-list">
+                    <div class="milestone-item" data-year="2009">
+                        <span class="milestone-year">2009</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">First Perovskite Solar Cell</div>
+                            <div class="milestone-desc">Miyasaka demonstrates organic-inorganic hybrid</div>
+                        </div>
+                        <span class="milestone-efficiency perovskite">3.8%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2012">
+                        <span class="milestone-year">2012</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">Solid-State Breakthrough</div>
+                            <div class="milestone-desc">Snaith & Grätzel eliminate liquid electrolyte</div>
+                        </div>
+                        <span class="milestone-efficiency perovskite">10.9%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2017">
+                        <span class="milestone-year">2017</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">KRICT/MIT Collaboration</div>
+                            <div class="milestone-desc">Compositional engineering advances</div>
+                        </div>
+                        <span class="milestone-efficiency perovskite">22.1%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2021">
+                        <span class="milestone-year">2021</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">UNIST Record</div>
+                            <div class="milestone-desc">Interface passivation breakthrough</div>
+                        </div>
+                        <span class="milestone-efficiency perovskite">25.5%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2024">
+                        <span class="milestone-year">2024</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">Current Record</div>
+                            <div class="milestone-desc">Approaching silicon parity</div>
+                        </div>
+                        <span class="milestone-efficiency perovskite">26.1%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tandem Milestones -->
+            <div class="milestone-card">
+                <div class="milestone-card-header">
+                    <div class="milestone-icon tandem">💎</div>
+                    <div>
+                        <div class="milestone-card-title">Tandem Cell Milestones</div>
+                        <div class="milestone-card-subtitle">Breaking the single-junction barrier</div>
+                    </div>
+                </div>
+                <div class="milestone-list">
+                    <div class="milestone-item" data-year="2015">
+                        <span class="milestone-year">2015</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">First Perovskite/Si Tandem</div>
+                            <div class="milestone-desc">Stanford/MIT demonstration</div>
+                        </div>
+                        <span class="milestone-efficiency tandem">13.7%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2018">
+                        <span class="milestone-year">2018</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">Oxford PV Breakthrough</div>
+                            <div class="milestone-desc">Monolithic integration advances</div>
+                        </div>
+                        <span class="milestone-efficiency tandem">28%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2020">
+                        <span class="milestone-year">2020</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">HZB Berlin Record</div>
+                            <div class="milestone-desc">Breaks 29% barrier</div>
+                        </div>
+                        <span class="milestone-efficiency tandem">29.5%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2023">
+                        <span class="milestone-year">2023</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">KAUST/LONGi Achievement</div>
+                            <div class="milestone-desc">Industrial collaboration milestone</div>
+                        </div>
+                        <span class="milestone-efficiency tandem">33.7%</span>
+                    </div>
+                    <div class="milestone-item" data-year="2024">
+                        <span class="milestone-year">2024</span>
+                        <div class="milestone-content">
+                            <div class="milestone-title">LONGi World Record</div>
+                            <div class="milestone-desc">Commercial-scale cell</div>
+                        </div>
+                        <span class="milestone-efficiency tandem">33.9%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Era Section -->
+        <div class="era-section animate">
+            <div class="era-badge">
+                <div class="era-color" style="background: #6b7280;"></div>
+                <span class="era-label">1954-1970: Space Age</span>
+            </div>
+            <div class="era-badge">
+                <div class="era-color" style="background: #3b82f6;"></div>
+                <span class="era-label">1970-2000: Terrestrial Development</span>
+            </div>
+            <div class="era-badge">
+                <div class="era-color" style="background: #10b981;"></div>
+                <span class="era-label">2000-2015: Grid Parity Era</span>
+            </div>
+            <div class="era-badge">
+                <div class="era-color" style="background: #f59e0b;"></div>
+                <span class="era-label">2015-Present: Multi-Technology Era</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Data Sources: <a href="#">NREL Best Research-Cell Efficiency Chart</a>, <a href="#">Fraunhofer ISE</a>, <a href="#">ITRPV Roadmap 2024</a>, Published Research Papers</p>
+            <p style="margin-top: 10px;">Last Updated: January 2025 | Efficiency values represent certified laboratory records</p>
+        </footer>
+    </div>
+
+    <!-- Custom Tooltip -->
+    <div class="custom-tooltip" id="customTooltip">
+        <div class="tooltip-title"></div>
+        <div class="tooltip-content"></div>
+    </div>
+
+    <script>
+        // Data for the chart
+        const chartData = {
+            // Silicon historical data
+            silicon: {
+                labels: [1954, 1958, 1963, 1970, 1975, 1980, 1983, 1985, 1989, 1994, 1999, 2005, 2010, 2014, 2017, 2019, 2021, 2023, 2024],
+                data: [6, 9, 11, 13, 14, 16, 18, 20, 22.8, 24, 25, 24.7, 25, 25.6, 26.7, 26.7, 26.7, 26.8, 26.8],
+                projected: {
+                    labels: [2024, 2026, 2028, 2030, 2033, 2035],
+                    data: [26.8, 27.2, 27.6, 28, 28.5, 29]
+                }
+            },
+            // Perovskite data
+            perovskite: {
+                labels: [2009, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
+                data: [3.8, 6.5, 10.9, 14.1, 17.9, 20.1, 21.1, 22.1, 23.3, 24.2, 25.2, 25.5, 25.7, 26, 26.1],
+                projected: {
+                    labels: [2024, 2026, 2028, 2030, 2033, 2035],
+                    data: [26.1, 27.5, 28.5, 29.5, 30, 30.5]
+                }
+            },
+            // Tandem data
+            tandem: {
+                labels: [2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024],
+                data: [13.7, 21.2, 23.6, 28, 28, 29.5, 29.8, 31.3, 33.7, 33.9],
+                projected: {
+                    labels: [2024, 2026, 2028, 2030, 2033, 2035],
+                    data: [33.9, 35.5, 37, 39, 41, 43]
+                }
+            },
+            // III-V Multijunction (concentrator)
+            multijunction: {
+                labels: [1990, 1995, 2000, 2005, 2010, 2012, 2014, 2017, 2020, 2022, 2024],
+                data: [30, 32, 34, 37.9, 41.6, 44, 46, 46.5, 47.1, 47.1, 47.6],
+                projected: {
+                    labels: [2024, 2028, 2032, 2035],
+                    data: [47.6, 49, 51, 52]
+                }
+            }
+        };
+
+        // Theoretical limits
+        const theoreticalLimits = {
+            silicon: 29.4,
+            perovskite: 31,
+            tandem: 45,
+            multijunction: 68
+        };
+
+        // Chart configuration
+        let efficiencyChart;
+
+        function createChart(showProjections = true) {
+            const ctx = document.getElementById('efficiencyChart').getContext('2d');
+            
+            // Combine historical and projected data
+            function combineData(tech, includeProjected) {
+                const historical = chartData[tech];
+                let allLabels = [...historical.labels];
+                let allData = [...historical.data];
+                
+                if (includeProjected && historical.projected) {
+                    // Skip first projected point as it overlaps with last historical
+                    allLabels = [...allLabels, ...historical.projected.labels.slice(1)];
+                    allData = [...allData, ...historical.projected.data.slice(1)];
+                }
+                
+                return { labels: allLabels, data: allData };
+            }
+
+            // Create combined dataset for x-axis
+            const allYears = new Set();
+            Object.keys(chartData).forEach(tech => {
+                chartData[tech].labels.forEach(y => allYears.add(y));
+                if (showProjections && chartData[tech].projected) {
+                    chartData[tech].projected.labels.forEach(y => allYears.add(y));
+                }
+            });
+            const years = Array.from(allYears).sort((a, b) => a - b);
+
+            // Interpolate data for each technology
+            function interpolateData(tech, includeProjected) {
+                const combined = combineData(tech, includeProjected);
+                return years.map(year => {
+                    const idx = combined.labels.indexOf(year);
+                    if (idx !== -1) return combined.data[idx];
+                    
+                    // Find surrounding points for interpolation
+                    let before = null, after = null;
+                    for (let i = 0; i < combined.labels.length; i++) {
+                        if (combined.labels[i] < year) before = { year: combined.labels[i], val: combined.data[i] };
+                        if (combined.labels[i] > year && after === null) after = { year: combined.labels[i], val: combined.data[i] };
+                    }
+                    
+                    if (before && after) {
+                        const ratio = (year - before.year) / (after.year - before.year);
+                        return before.val + ratio * (after.val - before.val);
+                    }
+                    return null;
+                });
+            }
+
+            const config = {
+                type: 'line',
+                data: {
+                    labels: years,
+                    datasets: [
+                        // Silicon
+                        {
+                            label: 'Crystalline Silicon',
+                            data: interpolateData('silicon', showProjections),
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: (ctx) => {
+                                const year = years[ctx.dataIndex];
+                                return chartData.silicon.labels.includes(year) ? 5 : 0;
+                            },
+                            pointBackgroundColor: '#3b82f6',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointHoverRadius: 8,
+                            segment: {
+                                borderDash: ctx => years[ctx.p0DataIndex] >= 2024 ? [6, 4] : undefined
+                            }
+                        },
+                        // Perovskite
+                        {
+                            label: 'Perovskite',
+                            data: interpolateData('perovskite', showProjections),
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: (ctx) => {
+                                const year = years[ctx.dataIndex];
+                                return chartData.perovskite.labels.includes(year) ? 5 : 0;
+                            },
+                            pointBackgroundColor: '#f59e0b',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointHoverRadius: 8,
+                            segment: {
+                                borderDash: ctx => years[ctx.p0DataIndex] >= 2024 ? [6, 4] : undefined
+                            }
+                        },
+                        // Tandem
+                        {
+                            label: 'Perovskite/Silicon Tandem',
+                            data: interpolateData('tandem', showProjections),
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: (ctx) => {
+                                const year = years[ctx.dataIndex];
+                                return chartData.tandem.labels.includes(year) ? 5 : 0;
+                            },
+                            pointBackgroundColor: '#10b981',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointHoverRadius: 8,
+                            segment: {
+                                borderDash: ctx => years[ctx.p0DataIndex] >= 2024 ? [6, 4] : undefined
+                            }
+                        },
+                        // Multijunction
+                        {
+                            label: 'III-V Multijunction',
+                            data: interpolateData('multijunction', showProjections),
+                            borderColor: '#a855f7',
+                            backgroundColor: 'rgba(168, 85, 247, 0.05)',
+                            borderWidth: 2.5,
+                            fill: true,
+                            tension: 0.3,
+                            pointRadius: (ctx) => {
+                                const year = years[ctx.dataIndex];
+                                return chartData.multijunction.labels.includes(year) ? 4 : 0;
+                            },
+                            pointBackgroundColor: '#a855f7',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointHoverRadius: 7,
+                            segment: {
+                                borderDash: ctx => years[ctx.p0DataIndex] >= 2024 ? [6, 4] : undefined
+                            }
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    interaction: {
+                        mode: 'index',
+                        intersect: false
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(15, 23, 42, 0.95)',
+                            titleColor: '#fff',
+                            bodyColor: '#cbd5e1',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            padding: 15,
+                            cornerRadius: 10,
+                            displayColors: true,
+                            callbacks: {
+                                title: (items) => `Year: ${items[0].label}`,
+                                label: (item) => {
+                                    if (item.raw === null) return null;
+                                    const isProjected = parseInt(item.label) > 2024;
+                                    return `${item.dataset.label}: ${item.raw.toFixed(1)}%${isProjected ? ' (projected)' : ''}`;
+                                }
+                            }
+                        },
+                        annotation: {
+                            annotations: {
+                                siliconLimit: {
+                                    type: 'line',
+                                    yMin: theoreticalLimits.silicon,
+                                    yMax: theoreticalLimits.silicon,
+                                    borderColor: 'rgba(59, 130, 246, 0.6)',
+                                    borderWidth: 2,
+                                    borderDash: [10, 5],
+                                    label: {
+                                        display: true,
+                                        content: 'Si Limit: 29.4%',
+                                        position: 'start',
+                                        backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                                        color: '#fff',
+                                        font: { size: 10 }
+                                    }
+                                },
+                                perovskiteLimit: {
+                                    type: 'line',
+                                    yMin: theoreticalLimits.perovskite,
+                                    yMax: theoreticalLimits.perovskite,
+                                    borderColor: 'rgba(245, 158, 11, 0.6)',
+                                    borderWidth: 2,
+                                    borderDash: [10, 5],
+                                    label: {
+                                        display: true,
+                                        content: 'Perovskite Limit: 31%',
+                                        position: 'start',
+                                        backgroundColor: 'rgba(245, 158, 11, 0.8)',
+                                        color: '#fff',
+                                        font: { size: 10 }
+                                    }
+                                },
+                                tandemLimit: {
+                                    type: 'line',
+                                    yMin: theoreticalLimits.tandem,
+                                    yMax: theoreticalLimits.tandem,
+                                    borderColor: 'rgba(16, 185, 129, 0.6)',
+                                    borderWidth: 2,
+                                    borderDash: [10, 5],
+                                    label: {
+                                        display: true,
+                                        content: 'Tandem Limit: 45%',
+                                        position: 'start',
+                                        backgroundColor: 'rgba(16, 185, 129, 0.8)',
+                                        color: '#fff',
+                                        font: { size: 10 }
+                                    }
+                                },
+                                presentLine: {
+                                    type: 'line',
+                                    xMin: 2024,
+                                    xMax: 2024,
+                                    borderColor: 'rgba(255, 255, 255, 0.3)',
+                                    borderWidth: 2,
+                                    borderDash: [5, 5],
+                                    label: {
+                                        display: true,
+                                        content: '2024 (Present)',
+                                        position: 'start',
+                                        backgroundColor: 'rgba(100, 116, 139, 0.8)',
+                                        color: '#fff',
+                                        font: { size: 10 }
+                                    }
+                                },
+                                // Breakthrough annotations
+                                bellLabs: {
+                                    type: 'point',
+                                    xValue: 1954,
+                                    yValue: 6,
+                                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                    radius: 8,
+                                    borderColor: '#3b82f6',
+                                    borderWidth: 3
+                                },
+                                perc: {
+                                    type: 'point',
+                                    xValue: 1983,
+                                    yValue: 18,
+                                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                    radius: 8,
+                                    borderColor: '#3b82f6',
+                                    borderWidth: 3
+                                },
+                                firstPerovskite: {
+                                    type: 'point',
+                                    xValue: 2009,
+                                    yValue: 3.8,
+                                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                                    radius: 8,
+                                    borderColor: '#f59e0b',
+                                    borderWidth: 3
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Year',
+                                color: '#94a3b8',
+                                font: { size: 14, weight: 'bold' }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: '#94a3b8',
+                                maxTicksLimit: 15
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Efficiency (%)',
+                                color: '#94a3b8',
+                                font: { size: 14, weight: 'bold' }
+                            },
+                            min: 0,
+                            max: 55,
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            },
+                            ticks: {
+                                color: '#94a3b8',
+                                callback: (value) => value + '%'
+                            }
+                        }
+                    }
+                }
+            };
+
+            if (efficiencyChart) {
+                efficiencyChart.destroy();
+            }
+            efficiencyChart = new Chart(ctx, config);
+        }
+
+        // Initialize chart
+        createChart(true);
+
+        // Control buttons
+        document.querySelectorAll('.control-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.control-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const view = this.dataset.view;
+                
+                switch(view) {
+                    case 'all':
+                        createChart(false);
+                        efficiencyChart.data.datasets.forEach(ds => ds.hidden = false);
+                        break;
+                    case 'silicon':
+                        createChart(false);
+                        efficiencyChart.data.datasets.forEach((ds, i) => ds.hidden = i !== 0);
+                        break;
+                    case 'emerging':
+                        createChart(false);
+                        efficiencyChart.data.datasets.forEach((ds, i) => ds.hidden = i === 0 || i === 3);
+                        break;
+                    case 'projected':
+                        createChart(true);
+                        break;
+                }
+                efficiencyChart.update();
+            });
+        });
+
+        // Legend interaction
+        document.querySelectorAll('.legend-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const series = this.dataset.series;
+                if (series === 'limits') return;
+                
+                this.classList.toggle('disabled');
+                
+                const datasetIndex = {
+                    'silicon': 0,
+                    'perovskite': 1,
+                    'tandem': 2,
+                    'multijunction': 3
+                }[series];
+                
+                if (datasetIndex !== undefined) {
+                    efficiencyChart.data.datasets[datasetIndex].hidden = 
+                        !efficiencyChart.data.datasets[datasetIndex].hidden;
+                    efficiencyChart.update();
+                }
+            });
+        });
+
+        // Milestone click handlers
+        document.querySelectorAll('.milestone-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const year = parseInt(this.dataset.year);
+                // Could add functionality to highlight point on chart
+                console.log(`Clicked milestone year: ${year}`);
+            });
+        });
+
+        // Animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
